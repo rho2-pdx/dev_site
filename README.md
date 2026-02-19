@@ -17,7 +17,7 @@ Site runs at `http://localhost:3000`.
 docker compose up --build -d
 ```
 
-Site runs at `http://localhost:80` via Nginx.
+Site runs at `http://localhost:3000` via Nginx.
 
 ## Adding a Project
 
@@ -35,3 +35,6 @@ Nginx (port 80)
 ├── /projects/java-app/*   → Java container (8080)
 └── /*                     → Next.js container (3000)
 ```
+## SSL
+
+Certbot used for SSL on web server with a cron job to automate updates
