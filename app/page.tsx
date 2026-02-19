@@ -13,7 +13,7 @@ export default function Home() {
             marginBottom: "0.75rem",
           }}
         >
-          hi, I&apos;m
+          this site is far from ready
         </p>
         <h1
           style={{
@@ -35,11 +35,13 @@ export default function Home() {
             marginBottom: "2.5rem",
           }}
         >
-          Software developer building across the stack — from systems
-          programming in Rust to full-stack web applications. Currently pursuing
-          my M.S. in Computer Science.
+          I'm partway through a MS in Computer Science but I have to switch
+          schools so I finally have time to make a dev site and work on
+          assembling my projects. This site was slopped together with AI and it
+          does not work yet.
         </p>
-        <div style={{ display: "flex", gap: "1rem" }}>
+
+        {/* <div style={{ display: "flex", gap: "1rem" }}>
           <Link
             href="/projects"
             style={{
@@ -70,7 +72,7 @@ export default function Home() {
           >
             about me
           </Link>
-        </div>
+        </div> */}
       </section>
 
       {/* Tech snapshot */}
@@ -85,7 +87,7 @@ export default function Home() {
             marginBottom: "1.25rem",
           }}
         >
-          Technologies
+          Things I feel confident with
         </h2>
         <div
           style={{
@@ -95,15 +97,57 @@ export default function Home() {
           }}
         >
           {[
-            "TypeScript",
-            "React / Next.js",
-            "Rust",
-            "Python",
+            "C++",
             "Java",
-            "C#",
-            "Docker",
+            "RESTful APIs",
+            "Networking",
+            "Improv Comedy",
             "Linux",
+            "git",
+            "Python",
+            "llama.cpp",
+            "Test Driven Development",
+            "SQL",
           ].map((tech) => (
+            <span
+              key={tech}
+              style={{
+                padding: "0.35rem 0.75rem",
+                background: "var(--color-surface)",
+                border: "1px solid var(--color-border)",
+                borderRadius: "var(--radius-sm)",
+                fontFamily: "var(--font-display)",
+                fontSize: "0.75rem",
+                color: "var(--color-text-muted)",
+              }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </section>
+      <section>
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "0.8rem",
+            color: "var(--color-text-muted)",
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+            marginBottom: "1.25rem",
+            marginTop: "1rem",
+          }}
+        >
+          Things I'm learning
+        </h2>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+          }}
+        >
+          {["Rust", "Typescript", "Next.js", "WASM"].map((tech) => (
             <span
               key={tech}
               style={{

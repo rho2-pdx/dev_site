@@ -10,69 +10,72 @@
  *   font-family: var(--font-body);
  */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap");
 
 :root {
-  --color-bg: #0a0a0f;
-  --color-bg-secondary: #12121a;
-  --color-surface: #1a1a26;
-  --color-surface-hover: #22222f;
-  --color-border: #2a2a3a;
-  --color-text: #e4e4ef;
-  --color-text-muted: #8888a0;
-  --color-accent: #64b5f6;
-  --color-accent-dim: #3d7ab8;
-  --font-display: "JetBrains Mono", "Fira Code", monospace;
-  --font-body: "IBM Plex Sans", system-ui, sans-serif;
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+    --color-bg: #0a0a0f;
+    --color-bg-secondary: #12121a;
+    --color-surface: #1a1a26;
+    --color-surface-hover: #22222f;
+    --color-border: #2a2a3a;
+    --color-text: #e4e4ef;
+    --color-text-muted: #8888a0;
+    --color-accent: #64b5f6;
+    --color-accent-dim: #3d7ab8;
+    --font-display: "Lato", "Fira Code", monospace;
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
 }
 
 body {
-  font-family: var(--font-body);
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  margin: 0;
-  line-height: 1.6;
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.6;
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  color: var(--color-text);
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-display);
+    color: var(--color-text);
 }
 
 a {
-  color: var(--color-accent);
-  text-decoration: none;
-  transition: color 0.15s ease;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.15s ease;
 }
 
 a:hover {
-  color: var(--color-text);
+    color: var(--color-text);
 }
 
 /* Common component styles for containerized apps */
 .shared-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
 }
 
 .shared-btn {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: var(--color-accent-dim);
-  color: var(--color-text);
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: background 0.15s ease;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--color-accent-dim);
+    color: var(--color-text);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
 }
 
 .shared-btn:hover {
-  background: var(--color-accent);
+    background: var(--color-accent);
 }
