@@ -41,6 +41,10 @@ export default function Home() {
           does not work yet.
         </p>
 
+        <p>
+          <h1>this text is just to check if my new github action works</h1>
+        </p>
+
         {/* <div style={{ display: "flex", gap: "1rem" }}>
           <Link
             href="/projects"
