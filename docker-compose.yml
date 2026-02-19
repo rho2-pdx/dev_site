@@ -3,10 +3,11 @@ services:
     image: nginx:alpine
     ports:
       - "80:80"
-      # - "443:443"  # Uncomment when adding SSL
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./shared-assets:/var/www/shared-assets:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - nextjs
     restart: unless-stopped
