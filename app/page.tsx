@@ -30,7 +30,7 @@ export default function Home() {
           style={{
             fontSize: "1.15rem",
             color: "var(--color-text-muted)",
-            maxWidth: "550px",
+            maxWidth: "900px",
             lineHeight: 1.7,
             marginBottom: "2.5rem",
           }}
