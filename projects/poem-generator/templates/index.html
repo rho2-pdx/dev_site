@@ -1,9 +1,11 @@
-{% extends "layout.html" %}
-{% block content %}
-    <h2>Highly Intelligent Poem Generator</h2><br>
-    <h4>Upload a photo and this incredibly competent system will
-        turn it into a succinct and beautiful poem hooray</h4>
+{% extends "layout.html" %} {% block content %}
+<h2>Highly Intelligent Poem Generator</h2>
+<br />
+<h4>
+    Upload a photo and this incredibly competent system will turn it into a
+    succinct and beautiful poem hooray
+</h4>
 
-    <h3><a href="{{ url_for('upload_image') }}">Upload Your Image</a></h3>
+<h3><a href="{{ url_for('upload_image') }}">Upload Your Image</a></h3>
 
 {% endblock %}

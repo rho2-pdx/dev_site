@@ -26,6 +26,7 @@ https://cloud.google.com/vision/docs.
 
 import argparse
 
+
 # [START vision_label_detection]
 def detect_labels(path):
     """
@@ -66,11 +67,8 @@ def run_local(args):
         detect_labels(args.path)
 
 
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Detect labels with Vision API"
-    )
+    parser = argparse.ArgumentParser(description="Detect labels with Vision API")
     parser.add_argument("command", choices=["labels"])
     parser.add_argument("path")
 

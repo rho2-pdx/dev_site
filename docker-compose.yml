@@ -21,8 +21,8 @@ services:
 
   poem-generator:
     build: ./projects/poem-generator
-    expose:
-      - "5000"
+    ports:
+      - "5050:5000"  # TODO: change back to expose: ["5000"] before deploying to VPS
     env_file:
       - ./projects/poem-generator/.env
     volumes:

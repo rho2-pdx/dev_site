@@ -1,13 +1,9 @@
-FROM python:3.10-slim
+FROM python:3.12-slim-bookworm
 
 COPY . /app
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install -y python3-pip python3-venv \
-    && python3 -m venv /env && /env/bin/pip install --no-cache-dir -r requirements.txt \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-ENV PATH="/env/bin:$PATH"
+RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
 

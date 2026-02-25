@@ -1,5 +1,7 @@
-from google.cloud import texttospeech
 import os
+
+from google.cloud import texttospeech
+
 
 def get_banned_words():
     """
@@ -7,11 +9,12 @@ def get_banned_words():
     i used ascii because it feels less uncomfortable
     :return: the map that indicates what to replace with what
     """
-    banned_word_ascii = [110, 105, 103, 103, 97] # i am not allowed to write this down
+    banned_word_ascii = [110, 105, 103, 103, 97]  # i am not allowed to write this down
     banned_word_ascii_plural = [110, 105, 103, 103, 97, 115]
-    banned_word = ''.join(chr(c) for c in banned_word_ascii)
-    banned_word_plural = ''.join(chr(c) for c in banned_word_ascii_plural)
+    banned_word = "".join(chr(c) for c in banned_word_ascii)
+    banned_word_plural = "".join(chr(c) for c in banned_word_ascii_plural)
     return {banned_word: "friend", banned_word_plural: "friends"}
+
 
 def protect_career(text, banned_map=None):
     """
@@ -21,11 +24,14 @@ def protect_career(text, banned_map=None):
     :return: returns the post-replacement words
     """
     if banned_map is None:
-        banned_map = get_banned_words() # the voice saying it out loud felt too uncomfortable
+        banned_map = (
+            get_banned_words()
+        )  # the voice saying it out loud felt too uncomfortable
     text_lower = text.lower()
     for word, replacement in banned_map.items():
         text_lower = text_lower.replace(word, replacement)
     return text_lower
+
 
 def run_speech(text, output_filename="static/audio/poem.mp3"):
     # [START tts_quickstart]

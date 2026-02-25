@@ -1,13 +1,12 @@
-{% extends "layout.html" %}
-{% block content %}
-    <h2>Image Input</h2>
-    <form method="post" enctype="multipart/form-data">
-      <p>
-        <input type="file" name="image">
-      </p>
-      <p>
-        <input type="submit" value="upload">
-      </p>
-    </form>
-    <h3><a href="{{ url_for('index') }}">Back to Homepage</a></h3>
+{% extends "layout.html" %} {% block content %}
+<h2>Image Input</h2>
+<form method="post" enctype="multipart/form-data">
+    <p>
+        <input type="file" name="image" />
+    </p>
+    <p>
+        <input type="submit" value="upload" />
+    </p>
+</form>
+<h3><a href="{{ url_for('index') }}">Back to Homepage</a></h3>
 {% endblock %}
