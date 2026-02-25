@@ -1,0 +1,7 @@
+flask
+gunicorn
+virtualenv
+google-cloud-vision
+lyricsgenius
+google-cloud-texttospeech
+google-cloud

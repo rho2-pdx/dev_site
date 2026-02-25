@@ -10,6 +10,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - nextjs
+      - poem-generator
     restart: unless-stopped
 
   nextjs:
@@ -18,13 +19,19 @@ services:
       - "3000"
     restart: unless-stopped
 
+  poem-generator:
+    build: ./projects/poem-generator
+    expose:
+      - "5000"
+    env_file:
+      - ./projects/poem-generator/.env
+    volumes:
+      - ./projects/poem-generator/google-credentials.json:/app/google-credentials.json:ro
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/google-credentials.json
+    restart: unless-stopped
+
   # Uncomment as you containerize each project:
-  #
-  # flask-app:
-  #   build: ./projects/flask-app
-  #   expose:
-  #     - "5000"
-  #   restart: unless-stopped
   #
   # java-app:
   #   build: ./projects/java-app

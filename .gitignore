@@ -20,6 +20,9 @@ Thumbs.db
 # Docker volume data
 mnt/
 
+# Google Cloud credentials
+**/google-credentials.json
+
 # Debug logs
 npm-debug.log*
 yarn-debug.log*
