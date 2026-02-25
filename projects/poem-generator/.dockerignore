@@ -1,0 +1,7 @@
+env
+__pycache__
+.idea
+.DS_Store
+.env
+*.db
+google-credentials.json
