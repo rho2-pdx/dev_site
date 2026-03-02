@@ -20,6 +20,9 @@ Thumbs.db
 # Docker volume data
 mnt/
 
+# Local docker-compose overrides
+docker-compose.override.yml
+
 # Google Cloud credentials
 **/google-credentials.json
 
