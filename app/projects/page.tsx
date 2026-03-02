@@ -13,7 +13,7 @@ export default function Projects() {
         Projects
       </h1>
       <a
-        href="/projects/poem-generator"
+        href="/projects/poem-generator/"
         style={{
           display: "block",
           padding: "1.25rem",
