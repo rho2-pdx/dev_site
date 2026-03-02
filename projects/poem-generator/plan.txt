@@ -1,0 +1,13 @@
+steps for fixing this:
+
+1. TensorFlow.js + MobileNet - look into these
+2. remove detect.py, google-cloud-vision from requirements
+3. update upload_image.py
+4. update upload_image.html
+
+then:
+1. browser built in SpeechSynthesis API
+2. label_display.html add "listen" button
+3. JS calls API, no mp3 file generated
+----- issue here, is i WANT a downloadable mp3 file
+-- check out a huggingface model instead for TTS

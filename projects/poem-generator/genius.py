@@ -16,7 +16,12 @@ class Genius(object):
             raise Exception(
                 "GENIUS_ACCESS_TOKEN is not set in the environment variables."
             )
-        self.client = lyricsgenius.Genius(self.access_token, timeout=15, retries=3)
+        self.client = lyricsgenius.Genius(
+            self.access_token,
+            timeout=15,
+            retries=3,
+            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+        )
 
     def search_and_extract_lyrics(self, label):
         """

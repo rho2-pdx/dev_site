@@ -31,8 +31,8 @@ Site runs at `http://localhost:3000` via Nginx.
 ```
 Nginx (port 80)
 ├── /shared/*              → shared-assets/ (CSS design tokens)
-├── /projects/flask-app/*  → Flask container (5000)
-├── /projects/java-app/*   → Java container (8080)
+├── /projects/poem-generator/*  → Flask container (5000)
+├── /projects/airline-app/*   → Java (Maven) container (8080)
 └── /*                     → Next.js container (3000)
 ```
 ## SSL
