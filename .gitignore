@@ -40,3 +40,6 @@ next-env.d.ts
 
 # python virtual environment
 .venv
+
+# python temp cache
+__pycache__
