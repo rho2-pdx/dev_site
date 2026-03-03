@@ -1,8 +1,10 @@
 import json
 import os
 import random
+from typing import Concatenate
 
 import lyricsgenius
+import requests
 
 GENIUS_CLIENT_ID = os.environ.get("GENIUS_CLIENT_ID")
 GENIUS_CLIENT_SECRET = os.environ.get("GENIUS_CLIENT_SECRET")
@@ -26,6 +28,32 @@ class Genius(object):
         """
         print("Searching Genius API for these three labels...", label)
 
+        def get_lyrics_for_song(title, artist, label):
+            """This uses lrclib to get the lyrics from the song
+            (I was using Genius but they cloudflare block my vps)
+            """
+            query = title + " " + artist
+            response = requests.get(
+                "https://lrclib.net/api/search",
+                params={"q": query},
+                headers={
+                    "User-Agent": "Poem-Generator from my portfolio dev site (https://github.com/rho2-pdx/dev_site)"
+                },
+            )
+            results = response.json()
+            lyrics = results[0]["plainLyrics"]  # the actual song lyrics
+
+            label_index = lyrics.find(label.lower())
+            snippet_start = max(0, label_index - len(label))
+            snippet_end = min(len(lyrics), label_index + 75)
+            snippet_start = lyrics.rfind("\n", 0, snippet_start) + 1
+            snippet_end = lyrics.find("\n", snippet_end)
+            snippet_end = snippet_end if snippet_end != -1 else len(lyrics)
+
+            lyrics_snippet = lyrics[snippet_start:snippet_end]
+
+            return lyrics_snippet
+
         result = self.client.search_lyrics(label.lower())
         # printing dictionary
         print(json.dumps(result, indent=4))
@@ -36,18 +64,10 @@ class Genius(object):
                 if section.get("type") == "lyric" and section.get("hits"):
                     random_hit = random.choice(section["hits"])
                     result = random_hit.get("result", [])
-                    song_id = result.get("id")
-                    print(song_id)
-                    lyrics = self.client.lyrics(song_id)
-                    label_index = lyrics.find(label.lower())
-                    snippet_start = max(0, label_index - len(label))
-                    snippet_end = min(len(lyrics), label_index + 75)
-                    snippet_start = lyrics.rfind("\n", 0, snippet_start) + 1
-                    snippet_end = lyrics.find("\n", snippet_end)
-                    snippet_end = snippet_end if snippet_end != -1 else len(lyrics)
-
-                    snippet = lyrics[snippet_start:snippet_end]
-
+                    song_title = result.get("title")
+                    song_artist = result.get("primary_artist_names")
+                    print(song_title, song_artist, label)
+                    snippet = get_lyrics_for_song(song_title, song_artist, label)
                     return snippet
 
         except Exception as e:
@@ -55,6 +75,13 @@ class Genius(object):
         return None
 
     def get_lines(self, labels):
+        """Gets called from the image upload
+
+        Trims label count to 3
+        runs the search_and_extract_lyrics
+        appends together into snippets and returns the "poem"
+        """
+
         if not labels:
             return "No labels provided"
 
