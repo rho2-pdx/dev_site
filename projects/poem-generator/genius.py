@@ -62,14 +62,15 @@ class Genius(object):
         try:
             # output of search is a dict, so we dive-down nested labels
             hits = result.get("hits", [])
-            if hits:
-                random_hit = random.choice(hits)
-                result = random_hit.get("result", {})
-                song_title = result.get("title")
-                song_artist = result.get("primary_artist_names")
+            random.shuffle(hits)
+            for hit in hits:
+                song = hit.get("result", {})
+                song_title = song.get("title")
+                song_artist = song.get("primary_artist_names")
                 print(song_title, song_artist, label)
                 snippet = get_lyrics_for_song(song_title, song_artist, label)
-                return snippet
+                if snippet:
+                    return snippet
 
         except Exception as e:
             print("Error extracting snippet:", e)
