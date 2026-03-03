@@ -16,12 +16,7 @@ class Genius(object):
             raise Exception(
                 "GENIUS_ACCESS_TOKEN is not set in the environment variables."
             )
-        self.client = lyricsgenius.Genius(
-            self.access_token,
-            timeout=15,
-            retries=3,
-            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-        )
+        self.client = lyricsgenius.Genius(self.access_token, timeout=15, retries=3)
 
     def search_and_extract_lyrics(self, label):
         """
@@ -29,7 +24,7 @@ class Genius(object):
         :param label:  these were generated with vision API
         :return: lyrics from a song to be read by text-to-speech
         """
-        print("Searching Genius API...", label)
+        print("Searching Genius API for these three labels...", label)
 
         result = self.client.search_lyrics(label.lower())
         # printing dictionary
@@ -42,6 +37,7 @@ class Genius(object):
                     random_hit = random.choice(section["hits"])
                     result = random_hit.get("result", [])
                     song_id = result.get("id")
+                    print(song_id)
                     lyrics = self.client.lyrics(song_id)
                     label_index = lyrics.find(label.lower())
                     snippet_start = max(0, label_index - len(label))
