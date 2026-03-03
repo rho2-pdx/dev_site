@@ -26,7 +26,7 @@ class Genius(object):
         :param label:  these were generated with vision API
         :return: lyrics from a song to be read by text-to-speech
         """
-        print("Searching Genius API for these three labels...", label)
+        print("Searching Genius API for...", label)
 
         def get_lyrics_for_song(title, artist, label):
             """This uses lrclib to get the lyrics from the song
@@ -41,7 +41,9 @@ class Genius(object):
                 },
             )
             results = response.json()
-            lyrics = results[0]["plainLyrics"]  # the actual song lyrics
+            lyrics = results[0].get("plainLyrics") or ""  # the actual song lyrics
+            if not lyrics or label.lower() not in lyrics:
+                return None
 
             label_index = lyrics.find(label.lower())
             snippet_start = max(0, label_index - len(label))
@@ -54,21 +56,20 @@ class Genius(object):
 
             return lyrics_snippet
 
-        result = self.client.search_lyrics(label.lower())
+        result = self.client.search_songs(label.lower())
         # printing dictionary
         print(json.dumps(result, indent=4))
         try:
             # output of search is a dict, so we dive-down nested labels
-            sections = result.get("sections", [])
-            for section in sections:
-                if section.get("type") == "lyric" and section.get("hits"):
-                    random_hit = random.choice(section["hits"])
-                    result = random_hit.get("result", [])
-                    song_title = result.get("title")
-                    song_artist = result.get("primary_artist_names")
-                    print(song_title, song_artist, label)
-                    snippet = get_lyrics_for_song(song_title, song_artist, label)
-                    return snippet
+            hits = result.get("hits", [])
+            if hits:
+                random_hit = random.choice(hits)
+                result = random_hit.get("result", {})
+                song_title = result.get("title")
+                song_artist = result.get("primary_artist_names")
+                print(song_title, song_artist, label)
+                snippet = get_lyrics_for_song(song_title, song_artist, label)
+                return snippet
 
         except Exception as e:
             print("Error extracting snippet:", e)
