@@ -35,7 +35,11 @@ export default function Home() {
             marginBottom: "2.5rem",
           }}
         >
-          After 8
+          After 8 "grad prep" classes and 6 graduate classes at Portland State,
+          I've transferred to Georgia Tech's OMSCS program. Since classes don't
+          start until the Fall, I finally have time for crushing projects! I
+          hope to do fun stuff, show it off, and learn through repetitive
+          inconsequential failure (off the job training)
         </p>
 
         <div style={{ display: "flex", gap: "1rem" }}>
@@ -91,14 +95,12 @@ export default function Home() {
             "C++",
             "Java",
             "RESTful APIs",
-            "Networking",
-            "Improv Comedy",
             "Linux",
             "git",
             "Python",
-            "llama.cpp",
             "Test Driven Development",
-            "SQL",
+            "llama.cpp",
+            "docker",
           ].map((tech) => (
             <span
               key={tech}
@@ -132,7 +134,7 @@ export default function Home() {
           Things I&apos;m learning
         </h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {["Rust", "Typescript", "Next.js", "WASM"].map((tech) => (
+          {["Rust", "Typescript", "Next.js", "WASM", "nginx"].map((tech) => (
             <span
               key={tech}
               style={{
@@ -206,9 +208,10 @@ export default function Home() {
             lineHeight: 1.6,
           }}
         >
-          Most repos are private — coursework from my MS program that I
-          can&apos;t share publicly due to academic integrity policies. Public
-          projects are being added as I go.
+          Lots of repos are private due to academic honesty policies and all
+          that. I'm reviewing, updating, and integrating each project into this
+          main dev site repo as I go. I'll be rolling this rho2 github into my
+          RyanHoulberg github in a few weeks when I'm officially done at PSU
         </p>
       </section>
 
@@ -298,38 +301,24 @@ export default function Home() {
                 marginBottom: "1.5rem",
               }}
             >
-              <li>Next.js 15 (App Router) — main site</li>
-              <li>Flask + Gunicorn — containerized project apps</li>
-              <li>nginx — reverse proxy, SSL termination</li>
-              <li>Docker Compose — orchestration</li>
-              <li>GitHub Actions — CI/CD to VPS</li>
-            </ul>
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "0.75rem",
-                color: "var(--color-text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                marginBottom: "0.75rem",
-              }}
-            >
-              What&apos;s next
-            </p>
-            <ul
-              style={{
-                fontSize: "0.85rem",
-                color: "var(--color-text-muted)",
-                lineHeight: 2,
-                paddingLeft: "0",
-                listStyle: "none",
-              }}
-            >
-              <li>✅ Poem generator project</li>
-              <li>✅ Auto-deploy on push to main</li>
-              <li>☐ About page with photos</li>
-              <li>☐ More projects</li>
-              <li>☐ Mobile nav</li>
+              <li>Every part of this site is getting dockerized</li>
+              <li>Next.js container as the app router</li>
+              <li>Flask + Gunicorn container for the Poem Generator</li>
+              <li>nginx container for reverse proxy management and SSL</li>
+              <li>Managed with Docker Compose</li>
+              <li>
+                CI/CD automated to VPS with Github Action, every commit pushed
+                to main goes live
+              </li>
+              <li>
+                VPS running on Hetzner in Germany, with self-hosting and load
+                balancing plans in the works...
+              </li>
+              <li>Tracking goals and progress with Obsidian</li>
+              <li>
+                local-hosting LLMs on my 4090 to integrate agentically with Zed
+                on my dev laptop
+              </li>
             </ul>
           </div>
         </details>

@@ -45,9 +45,7 @@ export default function About() {
             marginBottom: "1.25rem",
           }}
         >
-          I&apos;m a software developer based in Portland, OR. I&apos;m mid-way through a
-          Master&apos;s in Computer Science and currently transitioning schools, which
-          has given me time to actually build things in public for once.
+          I'm going to bed rn but this page is up
         </p>
         <p
           style={{
@@ -56,8 +54,7 @@ export default function About() {
             lineHeight: 1.8,
           }}
         >
-          When I&apos;m not writing code I do improv comedy. It shows up in my tag
-          cloud for a reason.
+          LLMs don't know how to be funny i swear
         </p>
       </section>
     </div>
