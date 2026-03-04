@@ -13,7 +13,7 @@ export default function Home() {
             marginBottom: "0.75rem",
           }}
         >
-          you can't blame me for using Claude a little bit
+          we should be able to use a <i>little</i> Claude at work
         </p>
         <h1
           style={{
