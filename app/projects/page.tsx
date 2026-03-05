@@ -36,11 +36,40 @@ export default function Projects() {
           style={{
             fontSize: "0.9rem",
             color: "var(--color-text-muted)",
+            marginBottom: "1rem",
           }}
         >
           Upload an image and get a poem generated from lyrics matching what it
           sees.
         </p>
+        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          {[
+            { src: "/media/python-5.svg", label: "Python" },
+            { src: "/media/flask.svg", label: "Flask" },
+            { src: "/media/gunicorn.svg", label: "Gunicorn" },
+          ].map(({ src, label }) => (
+            <div
+              key={label}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "0.35rem",
+              }}
+            >
+              <img src={src} alt={label} style={{ width: "28px", height: "28px", objectFit: "contain" }} />
+              <span
+                style={{
+                  fontSize: "0.7rem",
+                  color: "var(--color-text-muted)",
+                  fontFamily: "var(--font-display)",
+                }}
+              >
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
       </a>
     </div>
   );

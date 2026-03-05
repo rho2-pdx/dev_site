@@ -175,30 +175,25 @@ export default function Home() {
             marginBottom: "1rem",
           }}
         >
-          <a
-            href="https://github.com/rho2-pdx"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "0.9rem",
-              color: "var(--color-accent)",
-            }}
-          >
-            github.com/rho2-pdx
-          </a>
-          <a
-            href="https://github.com/RyanHoulberg"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "0.9rem",
-              color: "var(--color-accent)",
-            }}
-          >
-            github.com/RyanHoulberg
-          </a>
+          {["rho2-pdx", "RyanHoulberg"].map((handle) => (
+            <a
+              key={handle}
+              href={`https://github.com/${handle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontFamily: "var(--font-display)",
+                fontSize: "0.9rem",
+                color: "var(--color-accent)",
+              }}
+            >
+              <img src="/media/github-icon-1.svg" alt="GitHub" style={{ width: "18px", height: "18px", opacity: 0.7 }} />
+              github.com/{handle}
+            </a>
+          ))}
         </div>
         <p
           style={{
@@ -234,11 +229,15 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
           style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
             fontFamily: "var(--font-display)",
             fontSize: "0.9rem",
             color: "var(--color-accent)",
           }}
         >
+          <img src="/media/linkedin-icon-2.svg" alt="LinkedIn" style={{ width: "18px", height: "18px", opacity: 0.7 }} />
           linkedin.com/in/ryan-houlberg-272a0256
         </a>
       </section>
