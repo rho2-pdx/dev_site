@@ -1,26 +1,32 @@
 {% extends "layout.html" %} {% block content %}
-<h2>Detected Labels</h2>
-{% if labels and labels|length > 0 %}
-<ul>
-    {% for label in labels %}
-    <li>{{ label }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No labels detected.</p>
-{% endif %}
-<h2>Generated Poem</h2>
-<pre>{{ poem }}</pre>
+<div class="shared-card" style="margin-bottom: 1.5rem;">
+    <h2>Detected Labels</h2>
+    {% if labels and labels|length > 0 %}
+    <ul class="pg-labels">
+        {% for label in labels %}
+        <li>{{ label }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No labels detected.</p>
+    {% endif %}
+</div>
 
-<h2>Listen to the Poem</h2>
-<audio controls>
-    <source
-        src="{{ url_for('static', filename='audio/poem.mp3') }}"
-        type="audio/mp3"
-    />
-    Your browser does not support the audio element.
-</audio>
+<div class="shared-card" style="margin-bottom: 1.5rem;">
+    <h2>Generated Poem</h2>
+    <pre class="pg-poem">{{ poem }}</pre>
+</div>
 
-<a href="{{ url_for('upload_image') }}">Upload another image</a>
-<h3><a href="{{ url_for('index') }}">Back to Homepage</a></h3>
+<div class="shared-card" style="margin-bottom: 1.5rem;">
+    <h2>Listen</h2>
+    <audio controls class="pg-audio">
+        <source src="{{ url_for('static', filename='audio/poem.mp3') }}" type="audio/mp3" />
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<div class="pg-actions">
+    <a href="{{ url_for('upload_image') }}" class="shared-btn">Upload another image →</a>
+    <a href="{{ url_for('index') }}" class="pg-back-link">← back</a>
+</div>
 {% endblock %}

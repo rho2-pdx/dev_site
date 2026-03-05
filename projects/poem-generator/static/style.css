@@ -1,8 +1,82 @@
-body       { font-family: "Helvetica", sans-serif; font-size: 20px; color: #008303; }
-a, h1, h2  { color: #00008F; }
-form       { margin:.1em auto; padding:.1em; width: 400px; border: 1px }
-.heading  { font-weight: bold; }
-.page      { margin:.1em auto; padding:.1em; width: 504px;  }
-.entry     { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #888; }
-input[type=text] { margin: .5em 0; padding: .5em; font-size: 12px; color: #777; width: 200px;}
-input[type=textarea] { margin: .5em 0; padding: .5em; font-size: 12px; color: #777; width: 200px;}
+/* App-specific styles — shared tokens come from /shared/styles.css */
+
+.pg-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+}
+
+.pg-nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pg-nav-home {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+}
+
+.pg-nav-back {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.pg-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.pg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.pg-file-input {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.pg-poem {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    white-space: pre-wrap;
+    margin: 1rem 0 0;
+}
+
+.pg-labels {
+    color: var(--color-text-muted);
+    line-height: 2;
+    padding-left: 1.25rem;
+    margin: 0.75rem 0 0;
+}
+
+.pg-audio {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.pg-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pg-back-link {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}

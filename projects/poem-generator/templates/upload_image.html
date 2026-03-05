@@ -1,12 +1,10 @@
 {% extends "layout.html" %} {% block content %}
-<h2>Image Input</h2>
-<form method="post" enctype="multipart/form-data">
-    <p>
-        <input type="file" name="image" />
-    </p>
-    <p>
-        <input type="submit" value="upload" />
-    </p>
-</form>
-<h3><a href="{{ url_for('index') }}">Back to Homepage</a></h3>
+<div class="shared-card">
+    <h1>Upload an Image</h1>
+    <form method="post" enctype="multipart/form-data" class="pg-form">
+        <input type="file" name="image" class="pg-file-input" />
+        <input type="submit" value="Generate poem →" class="shared-btn" />
+    </form>
+    <a href="{{ url_for('index') }}" class="pg-back-link">← back</a>
+</div>
 {% endblock %}
