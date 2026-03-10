@@ -45,7 +45,7 @@ export default function About() {
             marginBottom: "1.25rem",
           }}
         >
-          I'm going to bed rn but this page is up
+          If you're this deep into my site then just interview me
         </p>
         <p
           style={{
@@ -53,9 +53,7 @@ export default function About() {
             color: "var(--color-text-muted)",
             lineHeight: 1.8,
           }}
-        >
-          LLMs don't know how to be funny i swear
-        </p>
+        ></p>
       </section>
     </div>
   );
