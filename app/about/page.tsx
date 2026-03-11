@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function About() {
   return (
     <div style={{ paddingTop: "4rem" }}>
@@ -25,14 +27,13 @@ export default function About() {
             marginBottom: "1.5rem",
           }}
         >
-          <img
+          <Image
             src="/media/profile-photo.jpeg"
             alt="Profile photo"
-            style={{
-              width: "100%",
-              height: "auto",
-              display: "block",
-            }}
+            width={1200}
+            height={630}
+            quality={66}
+            priority
           />
         </div>
       </section>
