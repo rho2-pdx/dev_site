@@ -13,25 +13,27 @@ export default function About() {
         About
       </h1>
 
-      {/* Placeholder for photos */}
+      {/* Profile Photo */}
       <section style={{ marginBottom: "3rem" }}>
         <div
           style={{
-            width: "120px",
-            height: "120px",
-            borderRadius: "50%",
-            background: "var(--color-surface)",
+            maxWidth: "400px",
+            width: "100%",
+            borderRadius: "12px",
+            overflow: "hidden",
             border: "1px solid var(--color-border)",
             marginBottom: "1.5rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "var(--font-display)",
-            fontSize: "0.75rem",
-            color: "var(--color-text-muted)",
           }}
         >
-          photo soon
+          <img
+            src="/media/profile-photo.jpeg"
+            alt="Profile photo"
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+            }}
+          />
         </div>
       </section>
 
@@ -45,7 +47,7 @@ export default function About() {
             marginBottom: "1.25rem",
           }}
         >
-          If you're this deep into my site then just interview me
+          I know that this is a bagel sandwich but I'm truly a burger fanatic
         </p>
         <p
           style={{

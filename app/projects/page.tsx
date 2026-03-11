@@ -57,7 +57,11 @@ export default function Projects() {
                 gap: "0.35rem",
               }}
             >
-              <img src={src} alt={label} style={{ width: "28px", height: "28px", objectFit: "contain" }} />
+              <img
+                src={src}
+                alt={label}
+                style={{ width: "28px", height: "28px", objectFit: "contain" }}
+              />
               <span
                 style={{
                   fontSize: "0.7rem",
