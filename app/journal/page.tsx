@@ -1,106 +1,58 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Calendar from "./Calendar";
 import JournalEntry from "./JournalEntry";
-import { JournalEntry as JournalEntryType } from "./types";
+import { journalEntries } from "./data";
 
 export default function JournalPage() {
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const dates = Object.keys(journalEntries).sort();
+    return dates.length > 0 ? dates[0] : null;
+  });
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date().toLocaleString("en-US", {
       timeZone: "America/Los_Angeles",
     });
     return new Date(now);
   });
-  const [entries, setEntries] = useState<Record<string, JournalEntryType>>({});
-  const [isEditing, setIsEditing] = useState(false);
-
-  // Load entries from localStorage on mount
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("journal_entries");
-      if (stored) {
-        setEntries(JSON.parse(stored));
-      }
-    } catch (error) {
-      console.error("Error loading journal entries:", error);
-    }
-  }, []);
 
   // Get all dates with entries for the current month
-  const getEntryDatesForMonth = useCallback(
-    (monthDate: Date): string[] => {
-      const year = monthDate.getFullYear();
-      const month = monthDate.getMonth();
-      const entryDates: string[] = [];
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const getEntryDatesForMonth = (monthDate: Date): string[] => {
+    const year = monthDate.getFullYear();
+    const month = monthDate.getMonth();
+    const entryDates: string[] = [];
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-        if (entries[dateStr]) {
-          entryDates.push(dateStr);
-        }
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      if (journalEntries[dateStr]) {
+        entryDates.push(dateStr);
       }
+    }
 
-      return entryDates;
-    },
-    [entries],
-  );
+    return entryDates;
+  };
 
-  const handleSelectDate = useCallback((dateStr: string) => {
+  const handleSelectDate = (dateStr: string) => {
     setSelectedDate(dateStr);
-    setIsEditing(false);
-  }, []);
+  };
 
-  const handleEdit = useCallback((date: string, content: string) => {
-    setEntries((prev) => {
-      const updated = {
-        ...prev,
-        [date]: {
-          ...prev[date],
-          content,
-          date,
-        },
-      };
-      localStorage.setItem("journal_entries", JSON.stringify(updated));
-      return updated;
-    });
-    setIsEditing(false);
-  }, []);
-
-  const handleDelete = useCallback(
-    (date: string) => {
-      if (confirm("Are you sure you want to delete this entry?")) {
-        setEntries((prev) => {
-          const { [date]: deleted, ...rest } = prev;
-          localStorage.setItem("journal_entries", JSON.stringify(rest));
-          return rest;
-        });
-        if (selectedDate === date) {
-          setSelectedDate(null);
-        }
-      }
-    },
-    [selectedDate],
-  );
-
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setSelectedDate(null);
-    setIsEditing(false);
-  }, []);
+  };
 
-  const handleMonthChange = useCallback((month: Date) => {
+  const handleMonthChange = (month: Date) => {
     setCurrentMonth(month);
-  }, []);
+  };
 
   const entryDates = getEntryDatesForMonth(currentMonth);
-  const selectedEntry = selectedDate ? entries[selectedDate] : null;
+  const selectedEntry = selectedDate ? journalEntries[selectedDate] : null;
 
   return (
     <div style={{ paddingTop: "4rem" }}>
       {/* Page Header */}
-      <div style={{ marginBottom: "2rem" }}>
+      <div style={{ marginBottom: "3rem" }}>
         <h1
           style={{
             fontSize: "clamp(2rem, 4vw, 3rem)",
@@ -119,22 +71,24 @@ export default function JournalPage() {
             fontFamily: "var(--font-body)",
           }}
         >
-          Track what you build, learn, and create every day
+          A collection of thoughts, projects, and learnings
         </p>
       </div>
 
       {/* Calendar Section */}
-      <section aria-label="Calendar" style={{ marginBottom: "2rem" }}>
+      <section aria-label="Calendar" style={{ marginBottom: "3rem" }}>
         <h2
           style={{
-            fontSize: "1rem",
+            fontSize: "0.9rem",
             fontWeight: 600,
-            color: "var(--color-text)",
-            marginBottom: "1rem",
+            color: "var(--color-text-muted)",
+            marginBottom: "1.5rem",
             fontFamily: "var(--font-display)",
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
           }}
         >
-          Calendar
+          Browse Entries
         </h2>
         <Calendar
           selectedDate={selectedDate}
@@ -143,17 +97,6 @@ export default function JournalPage() {
           currentMonth={currentMonth}
           onMonthChange={handleMonthChange}
         />
-        <p
-          style={{
-            fontSize: "0.8rem",
-            color: "var(--color-text-muted)",
-            marginTop: "0.75rem",
-            fontStyle: "italic",
-          }}
-        >
-          Days with highlighted borders have journal entries. Click any day to
-          view or create an entry.
-        </p>
       </section>
 
       {/* Journal Entry Section */}
@@ -184,95 +127,10 @@ export default function JournalPage() {
                   }
                 : null
             }
-            onEdit={handleEdit}
-            onDelete={handleDelete}
             onClose={handleClose}
           />
         </section>
       )}
-
-      {/* Quick Stats */}
-      <section
-        style={{
-          marginTop: "3rem",
-          padding: "1.25rem",
-          backgroundColor: "var(--color-bg-secondary)",
-          border: "1px solid var(--color-border)",
-          borderRadius: "var(--radius-md)",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: "0.85rem",
-            fontWeight: 600,
-            color: "var(--color-text-muted)",
-            marginBottom: "0.75rem",
-            fontFamily: "var(--font-display)",
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-          }}
-        >
-          Quick Stats
-        </h3>
-        <div
-          style={{
-            display: "flex",
-            gap: "2rem",
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <p
-              style={{
-                fontSize: "1.75rem",
-                fontWeight: 700,
-                color: "var(--color-accent)",
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              {Object.keys(entries).length}
-            </p>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--color-text-muted)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              Total Entries
-            </p>
-          </div>
-          <div>
-            <p
-              style={{
-                fontSize: "1.75rem",
-                fontWeight: 700,
-                color: "var(--color-accent)",
-                fontFamily: "var(--font-display)",
-              }}
-            >
-              {
-                getEntryDatesForMonth(
-                  new Date(
-                    new Date().toLocaleString("en-US", {
-                      timeZone: "America/Los_Angeles",
-                    }),
-                  ),
-                ).length
-              }
-            </p>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--color-text-muted)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              This Month
-            </p>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
