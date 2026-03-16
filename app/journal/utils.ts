@@ -31,8 +31,11 @@ interface ParsedEntry {
 export function parseMonthlyFile(content: string): ParsedEntry[] {
   const entries: ParsedEntry[] = [];
 
+  // Strip HTML comments (template examples live inside <!-- --> blocks)
+  const stripped = content.replace(/<!--[\s\S]*?-->/g, "");
+
   // Split by day headers (## YYYY-MM-DD)
-  const daySections = content.split(/##\s+(\d{4}-\d{2}-\d{2})/);
+  const daySections = stripped.split(/##\s+(\d{4}-\d{2}-\d{2})/);
   console.log("[Parser] daySections length:", daySections.length);
 
   // Skip the first element (everything before first ##)

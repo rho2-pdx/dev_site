@@ -67,10 +67,6 @@ export default function JournalPage() {
     setSelectedDate(dateStr);
   }, []);
 
-  const handleClose = useCallback(() => {
-    setSelectedDate(null);
-  }, []);
-
   const handleMonthChange = useCallback((month: Date) => {
     setCurrentMonth(month);
   }, []);
@@ -117,7 +113,7 @@ export default function JournalPage() {
             fontFamily: "var(--font-body)",
           }}
         >
-          A collection of thoughts, projects, and learnings
+          Daily updates of my developer journey!
         </p>
       </div>
 
@@ -173,7 +169,6 @@ export default function JournalPage() {
                   }
                 : null
             }
-            onClose={handleClose}
           />
         </section>
       )}
