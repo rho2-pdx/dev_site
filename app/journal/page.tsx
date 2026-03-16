@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Calendar from "./Calendar";
 import JournalEntry from "./JournalEntry";
-import { journalEntries } from "./data";
+import { JournalEntryData } from "./data";
 
 export default function JournalPage() {
-  const [selectedDate, setSelectedDate] = useState(() => {
-    const dates = Object.keys(journalEntries).sort();
-    return dates.length > 0 ? dates[0] : null;
-  });
+  const [entries, setEntries] = useState<Record<string, JournalEntryData>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date().toLocaleString("en-US", {
       timeZone: "America/Los_Angeles",
@@ -17,37 +16,84 @@ export default function JournalPage() {
     return new Date(now);
   });
 
-  // Get all dates with entries for the current month
-  const getEntryDatesForMonth = (monthDate: Date): string[] => {
-    const year = monthDate.getFullYear();
-    const month = monthDate.getMonth();
-    const entryDates: string[] = [];
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+  // Load journal entries from API on mount
+  useEffect(() => {
+    const loadEntries = async () => {
+      try {
+        const response = await fetch("/api/journal");
+        if (!response.ok) {
+          throw new Error("Failed to load journal entries");
+        }
+        const data = await response.json();
+        setEntries(data.entries || {});
 
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-      if (journalEntries[dateStr]) {
-        entryDates.push(dateStr);
+        // Set first entry as default selection
+        const sortedDates = Object.keys(data.entries || {}).sort();
+        if (sortedDates.length > 0) {
+          setSelectedDate(sortedDates[0]);
+        }
+      } catch (error) {
+        console.error("Error loading journal entries:", error);
+        setEntries({});
+      } finally {
+        setIsLoading(false);
       }
-    }
+    };
 
-    return entryDates;
-  };
+    loadEntries();
+  }, []);
 
-  const handleSelectDate = (dateStr: string) => {
+  // Get all dates with entries for the current month
+  const getEntryDatesForMonth = useCallback(
+    (monthDate: Date): string[] => {
+      const year = monthDate.getFullYear();
+      const month = monthDate.getMonth();
+      const entryDates: string[] = [];
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        if (entries[dateStr]) {
+          entryDates.push(dateStr);
+        }
+      }
+
+      return entryDates;
+    },
+    [entries],
+  );
+
+  const handleSelectDate = useCallback((dateStr: string) => {
     setSelectedDate(dateStr);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setSelectedDate(null);
-  };
+  }, []);
 
-  const handleMonthChange = (month: Date) => {
+  const handleMonthChange = useCallback((month: Date) => {
     setCurrentMonth(month);
-  };
+  }, []);
 
   const entryDates = getEntryDatesForMonth(currentMonth);
-  const selectedEntry = selectedDate ? journalEntries[selectedDate] : null;
+  const selectedEntry = selectedDate ? entries[selectedDate] : null;
+
+  // Show loading state while fetching
+  if (isLoading) {
+    return (
+      <div style={{ paddingTop: "4rem", textAlign: "center" }}>
+        <p
+          style={{
+            fontSize: "0.95rem",
+            color: "var(--color-text-muted)",
+            fontFamily: "var(--font-body)",
+          }}
+        >
+          Loading journal entries...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div style={{ paddingTop: "4rem" }}>
@@ -129,6 +175,22 @@ export default function JournalPage() {
             }
             onClose={handleClose}
           />
+        </section>
+      )}
+
+      {/* No entries message */}
+      {Object.keys(entries).length === 0 && !selectedDate && (
+        <section
+          style={{
+            textAlign: "center",
+            padding: "3rem 1.5rem",
+            color: "var(--color-text-muted)",
+          }}
+        >
+          <p style={{ fontSize: "0.95rem" }}>
+            No journal entries yet. Add entries to your monthly markdown files
+            to see them here.
+          </p>
         </section>
       )}
     </div>

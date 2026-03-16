@@ -1,34 +1,45 @@
-// Static journal entries data
-// Format: YYYY-MM-DD keys with title and content
+// Journal data loaded from markdown files
+// Each .md file in the journal/ directory represents one month
+// Daily entries are parsed from these files
 
 export interface JournalEntryData {
   title?: string;
   content: string;
 }
 
-// Add your journal entries below
-// Format: "YYYY-MM-DD": { title: "...", content: "..." }
-// Entries will appear on the calendar and be clickable
-export const journalEntries: Record<string, JournalEntryData> = {
-  // Example:
-  // "2024-12-25": {
-  //   title: "Holiday Work",
-  //   content: "What you worked on today...",
-  // },
-};
+// Import the markdown parser utilities
+export {
+  loadAllJournalEntries,
+  parseMonthlyFile,
+  generateMonthlyTemplate,
+  ensureMonthlyFileExists,
+  isValidDate,
+  getMonthPrefix,
+} from "./utils";
 
-// Helper to get entry count
-export function getTotalEntries(): number {
-  return Object.keys(journalEntries).length;
+// For backward compatibility and simple use cases
+// This provides a static fallback - entries should be loaded via loadAllJournalEntries()
+export const journalEntries: Record<string, JournalEntryData> = {};
+
+export function getTotalEntries(
+  entries: Record<string, JournalEntryData> = journalEntries,
+): number {
+  return Object.keys(entries).length;
 }
 
-// Helper to get dates with entries
-export function getEntryDates(): string[] {
-  return Object.keys(journalEntries);
+export function getEntryDates(
+  entries: Record<string, JournalEntryData> = journalEntries,
+): string[] {
+  return Object.keys(entries).sort();
 }
 
-// Helper to get entries for a specific month
-export function getEntriesForMonth(year: number, month: number): string[] {
+export function getEntriesForMonth(
+  year: number,
+  month: number,
+  entries: Record<string, JournalEntryData> = journalEntries,
+): string[] {
   const prefix = `${year}-${String(month + 1).padStart(2, "0")}`;
-  return Object.keys(journalEntries).filter((date) => date.startsWith(prefix));
+  return Object.keys(entries)
+    .filter((date) => date.startsWith(prefix))
+    .sort();
 }
