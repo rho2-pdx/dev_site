@@ -3,7 +3,7 @@ import "./globals.css";
 import Nav from "./components/Nav";
 
 export const metadata: Metadata = {
-  title: "Ryan Houlberg — Developer",
+  title: "Ryan Houlberg",
   description: "Software developer portfolio",
 };
 
