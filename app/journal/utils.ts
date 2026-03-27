@@ -48,11 +48,21 @@ export function parseMonthlyFile(content: string): ParsedEntry[] {
     const title = titleMatch ? titleMatch[1].trim() : "";
 
     // Extract content (everything after the title line)
-    const contentLines = sectionContent
-      .split("\n")
-      .slice(1) // Skip the title line
+    const lines = sectionContent.split("\n").slice(1); // Skip the title line
+
+    // Filter out title lines but preserve empty lines for paragraph breaks
+    const filteredLines = lines
       .map((line) => line.trim())
-      .filter((line) => line && !line.startsWith("**Title:"))
+      .filter((line) => !line.startsWith("**Title:"));
+
+    // Restore paragraph breaks by adding extra newline before empty lines
+    const contentLines = filteredLines
+      .map((line, index, arr) => {
+        if (line === "" && index > 0 && arr[index - 1] !== "") {
+          return "\n" + line;
+        }
+        return line;
+      })
       .join("\n")
       .trim();
 
