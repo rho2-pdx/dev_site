@@ -78,7 +78,22 @@ export default function JournalEntry({ date, entry }: JournalEntryProps) {
             fontFamily: "var(--font-body)",
           }}
         >
-          <p style={{ whiteSpace: "pre-wrap" }}>{entry.content}</p>
+          {entry.content.split("\n\n").map((paragraph, index, array) => (
+            <p
+              key={index}
+              style={{
+                whiteSpace: "pre-wrap",
+                borderBottom:
+                  index < array.length - 1
+                    ? "1px solid var(--color-border)"
+                    : "none",
+                paddingBottom: index < array.length - 1 ? "0.75rem" : "0",
+                marginBottom: index < array.length - 1 ? "0.75rem" : "0",
+              }}
+            >
+              {paragraph}
+            </p>
+          ))}
         </div>
       ) : (
         <div
