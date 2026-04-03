@@ -29,6 +29,15 @@ class UploadImage(MethodView):
             return render_template("upload_image.html", error="Invalid image")
 
         image = request.files["image"]
+
+        image.seek(0, 2)
+        size = image.tell()
+        image.seek(0)
+        if size > 50 * 1024 * 1024:
+            return render_template(
+                "upload_image.html", error="File too large (max 50MB)."
+            )
+
         valid_extensions = {"png", "jpg", "jpeg", "gif"}
         if "." in image.filename:
             ext = image.filename.rsplit(".", 1)[1].lower()
