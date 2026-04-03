@@ -33,34 +33,55 @@ class Genius(object):
             (I was using Genius but they cloudflare block my vps)
             """
             query = title + " " + artist
-            response = requests.get(
-                "https://lrclib.net/api/search",
-                params={"q": query},
-                headers={
-                    "User-Agent": "Poem-Generator from my portfolio dev site (https://github.com/rho2-pdx/dev_site)"
-                },
-            )
-            results = response.json()
-            lyrics = results[0].get("plainLyrics") or ""  # the actual song lyrics
-            if not lyrics or label.lower() not in lyrics:
+            try:
+                response = requests.get(
+                    "https://lrclib.net/api/search",
+                    params={"q": query},
+                    headers={
+                        "User-Agent": "Poem-Generator from my portfolio dev site (https://github.com/rho2-pdx/dev_site)"
+                    },
+                    timeout=10,
+                )
+                results = response.json()
+                if not results:
+                    return None
+            except Exception as e:
+                print("lrclib request failed:", e)
                 return None
 
-            label_index = lyrics.find(label.lower())
-            snippet_start = max(0, label_index - len(label))
-            snippet_end = min(len(lyrics), label_index + 75)
-            snippet_start = lyrics.rfind("\n", 0, snippet_start) + 1
-            snippet_end = lyrics.find("\n", snippet_end)
-            snippet_end = snippet_end if snippet_end != -1 else len(lyrics)
+            # try each lrclib result, not just the first
+            for result in results:
+                lyrics = result.get("plainLyrics") or ""
+                if not lyrics:
+                    continue
 
-            lyrics_snippet = lyrics[snippet_start:snippet_end]
+                lyrics_lower = lyrics.lower()
+                label_lower = label.lower()
 
-            return lyrics_snippet
+                # check each word in the label individually (helps multi-word labels like "facial hair")
+                search_terms = [label_lower]
+                if " " in label_lower:
+                    search_terms.extend(label_lower.split())
+
+                for term in search_terms:
+                    label_index = lyrics_lower.find(term)
+                    if label_index == -1:
+                        continue
+
+                    snippet_start = max(0, label_index - len(term))
+                    snippet_end = min(len(lyrics), label_index + 75)
+                    snippet_start = lyrics.rfind("\n", 0, snippet_start) + 1
+                    snippet_end = lyrics.find("\n", snippet_end)
+                    snippet_end = snippet_end if snippet_end != -1 else len(lyrics)
+
+                    lyrics_snippet = lyrics[snippet_start:snippet_end]
+                    return lyrics_snippet
+
+            return None
 
         result = self.client.search_songs(label.lower())
-        # printing dictionary
         print(json.dumps(result, indent=4))
         try:
-            # output of search is a dict, so we dive-down nested labels
             hits = result.get("hits", [])
             random.shuffle(hits)
             for hit in hits:
@@ -99,6 +120,6 @@ class Genius(object):
                 len(snippets) >= 3
             ):  # only use up to 3, don't really need more, it's arbitrary
                 break
-        while len(snippets) < 3:
-            snippets.append("No matching lyrics found for remaining labels.")
+        if not snippets:
+            return "No matching lyrics could be found for this image."
         return " ".join(snippets)
