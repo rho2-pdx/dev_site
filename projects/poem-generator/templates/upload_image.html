@@ -2,9 +2,21 @@
 <div class="shared-card">
     <h1>Upload an Image</h1>
     <form method="post" enctype="multipart/form-data" class="pg-form">
-        <input type="file" name="image" class="pg-file-input" />
+        <input type="file" name="image" accept="image/png,image/jpeg,image/gif" class="pg-file-input" />
+        <p class="pg-error" style="display:none;"></p>
         <input type="submit" value="Generate poem →" class="shared-btn" />
     </form>
     <a href="{{ url_for('index') }}" class="pg-back-link">← back</a>
 </div>
+<script>
+document.querySelector(".pg-form").addEventListener("submit", function (e) {
+    var file = document.querySelector(".pg-file-input").files[0];
+    var error = document.querySelector(".pg-error");
+    if (file && file.size > 50 * 1024 * 1024) {
+        e.preventDefault();
+        error.textContent = "File too large (max 50MB).";
+        error.style.display = "";
+    }
+});
+</script>
 {% endblock %}
