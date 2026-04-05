@@ -43,3 +43,14 @@ next-env.d.ts
 
 # python temp cache
 __pycache__
+
+# claude memory stuff
+.claude/
+
+# Private keys
+*.pem
+*.key
+*.p12
+
+# the cookery db
+CookeryData-Sun.sql

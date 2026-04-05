@@ -423,18 +423,17 @@ export default function Home() {
               <div
                 style={{
                   padding: "0.75rem",
-                  border: "2px dashed var(--color-border)",
+                  border: "2px solid var(--color-border)",
                   borderRadius: "var(--radius-md)",
-                  background: "var(--color-bg)",
+                  background: "var(--color-surface)",
                   textAlign: "center",
-                  opacity: 0.6,
                 }}
               >
                 <div style={{ fontWeight: 700, color: "var(--color-text)", marginBottom: "0.15rem" }}>
-                  Java
+                  Jetty
                 </div>
                 <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
-                  coming soon
+                  airline web
                 </div>
                 <div
                   style={{

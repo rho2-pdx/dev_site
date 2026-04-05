@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='us-ascii'?>
+
+<!DOCTYPE airline
+        PUBLIC "-//Joy of Coding at PSU//DTD Airline//EN" "airline.dtd">
+<airline>
+    <name>Global Wings</name>
+    <flight>
+        <number>3001</number>
+        <src>ORD</src>
+        <depart>
+            <date day="10" month="12" year="2024"/>
+            <time hour="6" minute="00"/>
+        </depart>
+        <dest>DFW</dest>
+        <arrive>
+            <date day="10" month="12" year="2024"/>
+            <time hour="8" minute="15"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>3002</number>
+        <src>DFW</src>
+        <depart>
+            <date day="11" month="12" year="2024"/>
+            <time hour="10" minute="45"/>
+        </depart>
+        <dest>LAX</dest>
+        <arrive>
+            <date day="11" month="12" year="2024"/>
+            <time hour="12" minute="30"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>3003</number>
+        <src>LAX</src>
+        <depart>
+            <date day="12" month="12" year="2024"/>
+            <time hour="14" minute="30"/>
+        </depart>
+        <dest>SEA</dest>
+        <arrive>
+            <date day="12" month="12" year="2024"/>
+            <time hour="16" minute="00"/>
+        </arrive>
+    </flight>
+</airline>
+

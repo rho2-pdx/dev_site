@@ -1,2 +1,0 @@
-- [User Profile](user_profile.md) — CS student, backend-strong, new to frontend design
-- [Design Direction](feedback_design_direction.md) — Homestar Runner vibe, keep fonts, ditch AI-look dark-blue palette

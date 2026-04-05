@@ -1,4 +1,28 @@
 export default function Projects() {
+  const projects = [
+    {
+      name: "Poem Generator",
+      href: "/projects/poem-generator/",
+      description:
+        "Upload an image and get a poem generated from lyrics matching what it sees.",
+      stack: [
+        { src: "/media/python-5.svg", label: "Python" },
+        { src: "/media/flask.svg", label: "Flask" },
+        { src: "/media/gunicorn.svg", label: "Gunicorn" },
+      ],
+    },
+    {
+      name: "Airline Web",
+      href: "/projects/airline-web/",
+      description:
+        "REST API for managing airlines and flights. Add flights, search by route, and get XML responses. Built as a servlet web app for a grad course at Portland State.",
+      stack: [
+        { src: "/media/java.svg", label: "Java 17" },
+        { src: "/media/jetty.svg", label: "Jetty" },
+      ],
+    },
+  ];
+
   return (
     <div style={{ paddingTop: "3rem" }}>
       <h1
@@ -21,71 +45,75 @@ export default function Projects() {
       >
         More coming as I port things over from school repos.
       </p>
-      <a
-        href="/projects/poem-generator/"
-        style={{
-          display: "block",
-          padding: "1.5rem",
-          background: "var(--color-surface)",
-          border: "2px solid var(--color-border)",
-          borderRadius: "var(--radius-lg)",
-          transition: "border-color 0.15s ease",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "1.15rem",
-            fontWeight: 600,
-            marginBottom: "0.5rem",
-            color: "var(--color-text)",
-          }}
-        >
-          Poem Generator
-        </h2>
-        <p
-          style={{
-            fontSize: "0.9rem",
-            color: "var(--color-text-muted)",
-            marginBottom: "1.25rem",
-            lineHeight: 1.6,
-          }}
-        >
-          Upload an image and get a poem generated from lyrics matching what it
-          sees.
-        </p>
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-          {[
-            { src: "/media/python-5.svg", label: "Python" },
-            { src: "/media/flask.svg", label: "Flask" },
-            { src: "/media/gunicorn.svg", label: "Gunicorn" },
-          ].map(({ src, label }) => (
-            <div
-              key={label}
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {projects.map((project) => (
+          <a
+            key={project.name}
+            href={project.href}
+            style={{
+              display: "block",
+              padding: "1.5rem",
+              background: "var(--color-surface)",
+              border: "2px solid var(--color-border)",
+              borderRadius: "var(--radius-lg)",
+              transition: "border-color 0.15s ease",
+            }}
+          >
+            <h2
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "0.35rem",
+                fontSize: "1.15rem",
+                fontWeight: 600,
+                marginBottom: "0.5rem",
+                color: "var(--color-text)",
               }}
             >
-              <img
-                src={src}
-                alt={label}
-                style={{ width: "28px", height: "28px", objectFit: "contain" }}
-              />
-              <span
-                style={{
-                  fontSize: "0.7rem",
-                  color: "var(--color-text-muted)",
-                  fontFamily: "var(--font-display)",
-                }}
-              >
-                {label}
-              </span>
+              {project.name}
+            </h2>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                color: "var(--color-text-muted)",
+                marginBottom: "1.25rem",
+                lineHeight: 1.6,
+              }}
+            >
+              {project.description}
+            </p>
+            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+              {project.stack.map(({ src, label }) => (
+                <div
+                  key={label}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0.35rem",
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt={label}
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      objectFit: "contain",
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: "0.7rem",
+                      color: "var(--color-text-muted)",
+                      fontFamily: "var(--font-display)",
+                    }}
+                  >
+                    {label}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </a>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

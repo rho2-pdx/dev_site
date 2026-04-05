@@ -11,6 +11,7 @@ services:
     depends_on:
       - nextjs
       - poem-generator
+      - airline-web
     restart: unless-stopped
 
   nextjs:
@@ -31,10 +32,8 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/google-credentials.json
     restart: unless-stopped
 
-  # Uncomment as you containerize each project:
-  #
-  # java-app:
-  #   build: ./projects/java-app
-  #   expose:
-  #     - "8080"
-  #   restart: unless-stopped
+  airline-web:
+    build: ./projects/airline-web
+    expose:
+      - "8080"
+    restart: unless-stopped
