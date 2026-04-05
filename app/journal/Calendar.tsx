@@ -59,8 +59,8 @@ export default function Calendar({
           --rdp-outside-opacity: 0.2;
           --rdp-today-color: var(--color-accent);
 
-          background-color: var(--color-bg-secondary);
-          border: 1px solid var(--color-border);
+          background-color: var(--color-surface);
+          border: 2px solid var(--color-border);
           border-radius: var(--radius-lg);
           padding: 2rem 2.25rem;
           color: var(--color-text);
@@ -104,7 +104,7 @@ export default function Calendar({
 
         .journal-cal-wrapper .rdp-button_previous:hover,
         .journal-cal-wrapper .rdp-button_next:hover {
-          background-color: var(--color-surface);
+          background-color: var(--color-bg-secondary);
         }
 
         /* Weekday headers */
@@ -153,13 +153,14 @@ export default function Calendar({
           color: var(--color-accent);
           opacity: 1;
           font-weight: 600;
-          background-color: rgba(100, 181, 246, 0.08);
-          border-color: var(--color-accent-dim);
+          background-color: var(--color-accent-light);
+          border-color: var(--color-accent);
           cursor: pointer;
         }
 
         .journal-cal-wrapper .rdp-has-entry .rdp-day_button:hover {
-          background-color: rgba(100, 181, 246, 0.18);
+          background-color: var(--color-accent);
+          color: #fff;
           border-color: var(--color-accent);
         }
 
@@ -169,7 +170,7 @@ export default function Calendar({
           opacity: 1 !important;
           font-weight: 700;
           background-color: var(--color-accent) !important;
-          border-color: var(--color-accent) !important;
+          border-color: var(--color-accent-dim) !important;
           cursor: pointer;
         }
       `}</style>

@@ -27,10 +27,14 @@ export default function JournalPage() {
         const data = await response.json();
         setEntries(data.entries || {});
 
-        // Set first entry as default selection
+        // Set latest entry as default selection
         const sortedDates = Object.keys(data.entries || {}).sort();
         if (sortedDates.length > 0) {
-          setSelectedDate(sortedDates[0]);
+          const latestDate = sortedDates[sortedDates.length - 1];
+          setSelectedDate(latestDate);
+          // Navigate calendar to the month of the latest entry
+          const [year, month] = latestDate.split("-").map(Number);
+          setCurrentMonth(new Date(year, month - 1, 1));
         }
       } catch (error) {
         console.error("Error loading journal entries:", error);
@@ -92,7 +96,7 @@ export default function JournalPage() {
   }
 
   return (
-    <div style={{ paddingTop: "4rem" }}>
+    <div style={{ paddingTop: "3rem" }}>
       {/* Page Header */}
       <div style={{ marginBottom: "3rem" }}>
         <h1

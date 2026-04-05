@@ -39,7 +39,7 @@ export default function RootLayout({
         </main>
         <footer
           style={{
-            borderTop: "1px solid var(--color-border)",
+            borderTop: "2px solid var(--color-border)",
             padding: "1.5rem",
             textAlign: "center",
             color: "var(--color-text-muted)",
@@ -47,7 +47,7 @@ export default function RootLayout({
             fontSize: "0.75rem",
           }}
         >
-          © 2026 Ryan Houlberg
+          &copy; 2026 Ryan Houlberg
         </footer>
       </body>
     </html>

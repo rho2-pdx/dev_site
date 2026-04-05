@@ -1,15 +1,48 @@
 import Link from "next/link";
 
+const pill = (text: string, variant: "solid" | "accent" = "solid") => ({
+  text,
+  variant,
+});
+
+const confidentSkills = [
+  "C++",
+  "Java",
+  "Python",
+  "RESTful APIs",
+  "Linux",
+  "git",
+  "Docker",
+  "Docker Compose",
+  "Flask",
+  "Test Driven Development",
+  "llama.cpp",
+  "Google Cloud APIs",
+  "CI/CD",
+  "SQL",
+];
+
+const learningSkills = [
+  "Rust",
+  "TypeScript",
+  "Next.js",
+  "React",
+  "WASM",
+  "nginx",
+  "Tailwind CSS",
+];
+
 export default function Home() {
   return (
-    <div style={{ paddingTop: "4rem" }}>
+    <div style={{ paddingTop: "3rem" }}>
       {/* Hero */}
-      <section style={{ marginBottom: "5rem" }}>
+      <section style={{ marginBottom: "4rem" }}>
         <p
           style={{
             fontFamily: "var(--font-display)",
             color: "var(--color-accent)",
             fontSize: "0.85rem",
+            fontWeight: 600,
             marginBottom: "0.75rem",
           }}
         >
@@ -22,52 +55,55 @@ export default function Home() {
             lineHeight: 1.1,
             marginBottom: "1.5rem",
             letterSpacing: "-0.03em",
+            color: "var(--color-text)",
           }}
         >
           Ryan Houlberg
         </h1>
         <p
           style={{
-            fontSize: "1.15rem",
+            fontSize: "1.1rem",
             color: "var(--color-text-muted)",
-            maxWidth: "900px",
-            lineHeight: 1.7,
+            maxWidth: "680px",
+            lineHeight: 1.75,
             marginBottom: "2.5rem",
           }}
         >
-          After 8 "grad prep" classes and 6 graduate classes at Portland State,
-          I've transferred to Georgia Tech's OMSCS program. Since classes don't
-          start until the Fall, I finally have time for crushing projects! I
-          hope to do fun stuff, show it off, and learn through repetitive
-          inconsequential failure (off the job training)
+          After 8 &ldquo;grad prep&rdquo; classes and 6 graduate classes at
+          Portland State, I&apos;ve transferred to Georgia Tech&apos;s OMSCS
+          program. Since classes don&apos;t start until the Fall, I finally have
+          time for crushing projects! I hope to do fun stuff, show it off, and
+          learn through repetitive inconsequential failure (off the job training)
         </p>
 
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div style={{ display: "flex", gap: "0.75rem" }}>
           <Link
             href="/projects"
             style={{
               display: "inline-block",
               padding: "0.6rem 1.25rem",
-              background: "var(--color-accent-dim)",
-              color: "var(--color-text)",
+              background: "var(--color-accent)",
+              color: "#fff",
               borderRadius: "var(--radius-sm)",
               fontFamily: "var(--font-display)",
               fontSize: "0.85rem",
+              fontWeight: 600,
               transition: "background 0.15s ease",
             }}
           >
-            view projects →
+            view projects &rarr;
           </Link>
           <Link
             href="/about"
             style={{
               display: "inline-block",
               padding: "0.6rem 1.25rem",
-              border: "1px solid var(--color-border)",
-              color: "var(--color-text-muted)",
+              border: "2px solid var(--color-border)",
+              color: "var(--color-text)",
               borderRadius: "var(--radius-sm)",
               fontFamily: "var(--font-display)",
               fontSize: "0.85rem",
+              fontWeight: 500,
               transition: "all 0.15s ease",
             }}
           >
@@ -76,50 +112,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tech snapshot */}
-      <section style={{ marginBottom: "3rem" }}>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "0.8rem",
-            color: "var(--color-text-muted)",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-            marginBottom: "1.25rem",
-          }}
-        >
-          Things I feel confident with
-        </h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {[
-            "C++",
-            "Java",
-            "RESTful APIs",
-            "Linux",
-            "git",
-            "Python",
-            "Test Driven Development",
-            "llama.cpp",
-            "docker",
-          ].map((tech) => (
-            <span
-              key={tech}
-              style={{
-                padding: "0.35rem 0.75rem",
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-sm)",
-                fontFamily: "var(--font-display)",
-                fontSize: "0.75rem",
-                color: "var(--color-text-muted)",
-              }}
-            >
-              {tech}
-            </span>
-          ))}
+      {/* Skills — two columns side by side */}
+      <section
+        style={{
+          marginBottom: "4rem",
+          background: "var(--color-surface)",
+          border: "2px solid var(--color-border)",
+          borderRadius: "var(--radius-lg)",
+          padding: "2rem",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "2rem",
+        }}
+      >
+        <div>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              marginBottom: "1rem",
+            }}
+          >
+            Things I feel confident with
+          </h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {confidentSkills.map((tech) => (
+              <span
+                key={tech}
+                style={{
+                  padding: "0.3rem 0.65rem",
+                  background: "var(--color-bg)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "var(--radius-sm)",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.75rem",
+                  color: "var(--color-text)",
+                  fontWeight: 500,
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              marginBottom: "1rem",
+            }}
+          >
+            Things I&apos;m learning
+          </h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {learningSkills.map((tech) => (
+              <span
+                key={tech}
+                style={{
+                  padding: "0.3rem 0.65rem",
+                  background: "var(--color-accent-light)",
+                  border: "1px solid var(--color-accent)",
+                  borderRadius: "var(--radius-sm)",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.75rem",
+                  color: "var(--color-accent-dim)",
+                  fontWeight: 500,
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
+      {/* Architecture */}
       <section style={{ marginBottom: "4rem" }}>
         <h2
           style={{
@@ -128,199 +202,410 @@ export default function Home() {
             color: "var(--color-text-muted)",
             textTransform: "uppercase",
             letterSpacing: "0.1em",
-            marginBottom: "1.25rem",
+            marginBottom: "0.5rem",
           }}
         >
-          Things I&apos;m learning
+          How this site works
         </h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {["Rust", "Typescript", "Next.js", "WASM", "nginx"].map((tech) => (
-            <span
-              key={tech}
-              style={{
-                padding: "0.35rem 0.75rem",
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-sm)",
-                fontFamily: "var(--font-display)",
-                fontSize: "0.75rem",
-                color: "var(--color-text-muted)",
-              }}
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* GitHub */}
-      <section style={{ marginBottom: "4rem" }}>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "0.8rem",
-            color: "var(--color-text-muted)",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-            marginBottom: "1.25rem",
-          }}
-        >
-          GitHub
-        </h2>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-            marginBottom: "1rem",
-          }}
-        >
-          {["rho2-pdx", "RyanHoulberg"].map((handle) => (
-            <a
-              key={handle}
-              href={`https://github.com/${handle}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                fontFamily: "var(--font-display)",
-                fontSize: "0.9rem",
-                color: "var(--color-accent)",
-              }}
-            >
-              <img src="/media/github-icon-1.svg" alt="GitHub" style={{ width: "18px", height: "18px", opacity: 0.7 }} />
-              github.com/{handle}
-            </a>
-          ))}
-        </div>
         <p
           style={{
             fontSize: "0.85rem",
             color: "var(--color-text-muted)",
-            maxWidth: "600px",
+            marginBottom: "1.5rem",
             lineHeight: 1.6,
           }}
         >
-          Lots of repos are private due to academic honesty policies and all
-          that. I'm reviewing, updating, and integrating each project into this
-          main dev site repo as I go. I'll be rolling this rho2 github into my
-          RyanHoulberg github in a few weeks when I'm officially done at PSU
+          Every push to main auto-deploys via{" "}
+          <a
+            href="https://github.com/rho2-pdx/dev_site"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--color-accent)", fontWeight: 500 }}
+          >
+            GitHub Actions
+          </a>
         </p>
-      </section>
 
-      {/* LinkedIn */}
-      <section style={{ marginBottom: "4rem" }}>
-        <h2
+        <div
           style={{
+            background: "var(--color-surface)",
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "2rem",
             fontFamily: "var(--font-display)",
             fontSize: "0.8rem",
-            color: "var(--color-text-muted)",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-            marginBottom: "1.25rem",
           }}
         >
-          LinkedIn
-        </h2>
-        <a
-          href="https://linkedin.com/in/ryan-houlberg-272a0256"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontFamily: "var(--font-display)",
-            fontSize: "0.9rem",
-            color: "var(--color-accent)",
-          }}
-        >
-          <img src="/media/linkedin-icon-2.svg" alt="LinkedIn" style={{ width: "18px", height: "18px", opacity: 0.7 }} />
-          linkedin.com/in/ryan-houlberg-272a0256
-        </a>
-      </section>
+          {/* Row 1: Cloudflare */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
+            <div
+              style={{
+                padding: "0.6rem 1.5rem",
+                border: "2px solid var(--color-border)",
+                borderRadius: "var(--radius-md)",
+                background: "var(--color-bg)",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontWeight: 700, color: "var(--color-text)" }}>Cloudflare</div>
+              <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                DNS + SSL + CDN
+              </div>
+            </div>
+          </div>
 
-      {/* View the code */}
-      <section style={{ marginBottom: "4rem" }}>
-        <details
-          style={{
-            border: "1px solid var(--color-border)",
-            borderRadius: "var(--radius-md)",
-            padding: "1.25rem",
-            background: "var(--color-surface)",
-          }}
-        >
-          <summary
+          {/* Connector */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
+            <div style={{ width: "2px", height: "24px", background: "var(--color-border)" }} />
+          </div>
+
+          {/* Row 2: VPS */}
+          <div
             style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "0.85rem",
-              color: "var(--color-text-muted)",
-              cursor: "pointer",
-              userSelect: "none",
-              listStyle: "none",
+              border: "2px solid var(--color-accent)",
+              borderRadius: "var(--radius-lg)",
+              padding: "1.25rem",
+              background: "var(--color-accent-light)",
             }}
           >
-            view the code ↓
-          </summary>
-          <div style={{ marginTop: "1.25rem" }}>
-            <a
-              href="https://github.com/rho2-pdx/dev_site"
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
               style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "0.85rem",
-                color: "var(--color-accent)",
-                display: "block",
-                marginBottom: "1.5rem",
+                textAlign: "center",
+                marginBottom: "1rem",
               }}
             >
-              github.com/rho2-pdx/dev_site →
-            </a>
-            <p
+              <div style={{ fontWeight: 700, color: "var(--color-accent-dim)" }}>
+                Hetzner VPS
+              </div>
+              <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                Germany &middot; Docker Compose
+              </div>
+            </div>
+
+            {/* nginx */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
+              <div
+                style={{
+                  padding: "0.5rem 1.25rem",
+                  border: "2px solid var(--color-border)",
+                  borderRadius: "var(--radius-md)",
+                  background: "var(--color-surface)",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontWeight: 700, color: "var(--color-text)" }}>nginx</div>
+                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                  reverse proxy &middot; SSL termination
+                </div>
+              </div>
+            </div>
+
+            {/* Connector splitting */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
+              <div style={{ width: "2px", height: "16px", background: "var(--color-border)" }} />
+            </div>
+
+            {/* Horizontal connector bar */}
+            <div
               style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "0.75rem",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "0.5rem",
+                padding: "0 4rem",
+              }}
+            >
+              <div
+                style={{
+                  height: "2px",
+                  background: "var(--color-border)",
+                  width: "100%",
+                  position: "relative",
+                }}
+              >
+                {/* Left drop */}
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: "2px",
+                    height: "16px",
+                    background: "var(--color-border)",
+                  }}
+                />
+                {/* Center drop */}
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: 0,
+                    width: "2px",
+                    height: "16px",
+                    background: "var(--color-border)",
+                    transform: "translateX(-50%)",
+                  }}
+                />
+                {/* Right drop */}
+                <div
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    top: 0,
+                    width: "2px",
+                    height: "16px",
+                    background: "var(--color-border)",
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Containers row */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: "0.75rem",
+                marginTop: "0.5rem",
+              }}
+            >
+              <div
+                style={{
+                  padding: "0.75rem",
+                  border: "2px solid var(--color-border)",
+                  borderRadius: "var(--radius-md)",
+                  background: "var(--color-surface)",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontWeight: 700, color: "var(--color-text)", marginBottom: "0.15rem" }}>
+                  Next.js
+                </div>
+                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                  site + journal
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.65rem",
+                    color: "var(--color-text-muted)",
+                    marginTop: "0.35rem",
+                    fontStyle: "italic",
+                  }}
+                >
+                  :3000
+                </div>
+              </div>
+              <div
+                style={{
+                  padding: "0.75rem",
+                  border: "2px solid var(--color-border)",
+                  borderRadius: "var(--radius-md)",
+                  background: "var(--color-surface)",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontWeight: 700, color: "var(--color-text)", marginBottom: "0.15rem" }}>
+                  Flask
+                </div>
+                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                  poem generator
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.65rem",
+                    color: "var(--color-text-muted)",
+                    marginTop: "0.35rem",
+                    fontStyle: "italic",
+                  }}
+                >
+                  :5000
+                </div>
+              </div>
+              <div
+                style={{
+                  padding: "0.75rem",
+                  border: "2px dashed var(--color-border)",
+                  borderRadius: "var(--radius-md)",
+                  background: "var(--color-bg)",
+                  textAlign: "center",
+                  opacity: 0.6,
+                }}
+              >
+                <div style={{ fontWeight: 700, color: "var(--color-text)", marginBottom: "0.15rem" }}>
+                  Java
+                </div>
+                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                  coming soon
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.65rem",
+                    color: "var(--color-text-muted)",
+                    marginTop: "0.35rem",
+                    fontStyle: "italic",
+                  }}
+                >
+                  :8080
+                </div>
+              </div>
+            </div>
+
+            {/* Shared assets note */}
+            <div
+              style={{
+                marginTop: "1rem",
+                padding: "0.5rem 0.75rem",
+                background: "var(--color-surface)",
+                border: "1px solid var(--color-border)",
+                borderRadius: "var(--radius-sm)",
+                fontSize: "0.7rem",
                 color: "var(--color-text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                marginBottom: "0.75rem",
+                textAlign: "center",
               }}
             >
-              Stack
-            </p>
-            <ul
-              style={{
-                fontSize: "0.85rem",
-                color: "var(--color-text-muted)",
-                lineHeight: 2,
-                paddingLeft: "1.25rem",
-                marginBottom: "1.5rem",
-              }}
-            >
-              <li>Every part of this site is getting dockerized</li>
-              <li>Next.js container as the app router</li>
-              <li>Flask + Gunicorn container for the Poem Generator</li>
-              <li>nginx container for reverse proxy management and SSL</li>
-              <li>Managed with Docker Compose</li>
-              <li>
-                CI/CD automated to VPS with Github Action, every commit pushed
-                to main goes live
-              </li>
-              <li>
-                VPS running on Hetzner in Germany, with self-hosting and load
-                balancing plans in the works...
-              </li>
-              <li>Tracking goals and progress with Obsidian</li>
-              <li>
-                local-hosting LLMs on my 4090 to integrate agentically with Zed
-                on my dev laptop
-              </li>
-            </ul>
+              shared design tokens served by nginx at /shared/styles.css
+            </div>
           </div>
-        </details>
+
+          {/* CI/CD note */}
+          <div
+            style={{
+              marginTop: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
+              fontSize: "0.75rem",
+              color: "var(--color-text-muted)",
+            }}
+          >
+            <span>push to main</span>
+            <span style={{ color: "var(--color-border)" }}>&rarr;</span>
+            <span>GitHub Actions</span>
+            <span style={{ color: "var(--color-border)" }}>&rarr;</span>
+            <span>SSH deploy</span>
+            <span style={{ color: "var(--color-border)" }}>&rarr;</span>
+            <span>docker compose up</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Links row — GitHub + LinkedIn side by side */}
+      <section
+        style={{
+          marginBottom: "4rem",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "1.5rem",
+        }}
+      >
+        <div
+          style={{
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "1.5rem",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              marginBottom: "1rem",
+            }}
+          >
+            GitHub
+          </h2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
+            }}
+          >
+            {["rho2-pdx", "RyanHoulberg"].map((handle) => (
+              <a
+                key={handle}
+                href={`https://github.com/${handle}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.85rem",
+                  color: "var(--color-accent)",
+                  fontWeight: 500,
+                }}
+              >
+                <img
+                  src="/media/github-icon-1.svg"
+                  alt="GitHub"
+                  style={{ width: "18px", height: "18px", opacity: 0.6 }}
+                />
+                github.com/{handle}
+              </a>
+            ))}
+          </div>
+          <p
+            style={{
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+              lineHeight: 1.6,
+              marginTop: "0.75rem",
+            }}
+          >
+            Lots of repos are private due to academic honesty policies.
+            I&apos;m reviewing and integrating each project into this main dev
+            site repo as I go.
+          </p>
+        </div>
+        <div
+          style={{
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "1.5rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              marginBottom: "1rem",
+            }}
+          >
+            LinkedIn
+          </h2>
+          <a
+            href="https://linkedin.com/in/ryan-houlberg-272a0256"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontFamily: "var(--font-display)",
+              fontSize: "0.85rem",
+              color: "var(--color-accent)",
+              fontWeight: 500,
+            }}
+          >
+            <img
+              src="/media/linkedin-icon-2.svg"
+              alt="LinkedIn"
+              style={{ width: "18px", height: "18px", opacity: 0.6 }}
+            />
+            linkedin.com/in/ryan-houlberg
+          </a>
+        </div>
       </section>
     </div>
   );

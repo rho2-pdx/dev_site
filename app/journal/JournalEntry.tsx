@@ -22,9 +22,9 @@ export default function JournalEntry({ date, entry }: JournalEntryProps) {
   return (
     <div
       style={{
-        backgroundColor: "var(--color-bg-secondary)",
-        border: "1px solid var(--color-border)",
-        borderRadius: "var(--radius-md)",
+        backgroundColor: "var(--color-surface)",
+        border: "2px solid var(--color-border)",
+        borderRadius: "var(--radius-lg)",
         padding: "1.5rem",
         marginTop: "1.5rem",
         animation: "fadeIn 0.2s ease-out",
@@ -59,8 +59,9 @@ export default function JournalEntry({ date, entry }: JournalEntryProps) {
           <p
             style={{
               fontSize: "0.85rem",
-              color: "var(--color-text-muted)",
+              color: "var(--color-accent)",
               fontFamily: "var(--font-display)",
+              fontWeight: 500,
             }}
           >
             {entry.title}

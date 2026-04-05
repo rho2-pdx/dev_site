@@ -5,16 +5,17 @@
  * for use by containerized apps (Flask, Java, etc.)
  */
 :root {
-    --color-bg: #0a0a0f;
-    --color-bg-secondary: #12121a;
-    --color-surface: #1a1a26;
-    --color-surface-hover: #22222f;
-    --color-border: #2a2a3a;
-    --color-text: #e4e4ef;
-    --color-text-muted: #8888a0;
-    --color-accent: #64b5f6;
-    --color-accent-dim: #3d7ab8;
-    --font-display: "Lato", "Poppins", monospace;
+    --color-bg: #f5f1eb;
+    --color-bg-secondary: #ebe6de;
+    --color-surface: #ffffff;
+    --color-surface-hover: #f0ebe4;
+    --color-border: #d6d0c6;
+    --color-text: #2d2926;
+    --color-text-muted: #7a746b;
+    --color-accent: #c44d2b;
+    --color-accent-dim: #a8412a;
+    --color-accent-light: #f3ddd6;
+    --font-display: "Lato", sans-serif;
     --font-body: "IBM Plex Sans", system-ui, sans-serif;
     --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
@@ -41,5 +42,10 @@ a {
 }
 
 a:hover {
+    color: var(--color-accent-dim);
+}
+
+::selection {
+    background: var(--color-accent-light);
     color: var(--color-text);
 }

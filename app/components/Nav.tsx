@@ -19,16 +19,15 @@ export default function Nav() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        borderBottom: "1px solid var(--color-border)",
-        backgroundColor: "rgba(10, 10, 15, 0.85)",
-        backdropFilter: "blur(12px)",
+        borderBottom: "2px solid var(--color-border)",
+        backgroundColor: "var(--color-bg)",
       }}
     >
       <div
         style={{
           maxWidth: "1100px",
           margin: "0 auto",
-          padding: "0.75rem 1.5rem",
+          padding: "0.85rem 1.5rem",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -54,11 +53,17 @@ export default function Nav() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "0.85rem",
+                fontWeight: pathname === link.href ? 600 : 400,
                 color:
                   pathname === link.href
                     ? "var(--color-accent)"
                     : "var(--color-text-muted)",
                 transition: "color 0.15s ease",
+                borderBottom:
+                  pathname === link.href
+                    ? "2px solid var(--color-accent)"
+                    : "2px solid transparent",
+                paddingBottom: "2px",
               }}
             >
               {link.label}
