@@ -12,7 +12,7 @@ export default function Projects() {
       ],
     },
     {
-      name: "Airline Web (currently broken don't look)",
+      name: "Airline Web",
       href: "/projects/airline-web/",
       description:
         "REST API for managing airlines and flights. Add flights, search by route, and get XML responses. Built as a servlet web app for a grad course at Portland State.",

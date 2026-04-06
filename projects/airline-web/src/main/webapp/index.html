@@ -1,53 +1,90 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>HTML forms for interacting with the REST API</title>
-    <style type="text/css">
-        div {
-            padding-bottom: 1em;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline REST API</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            padding: 2rem;
+            max-width: 700px;
+            margin: 0 auto;
         }
+        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
+        p.subtitle { color: #888; margin-bottom: 2rem; font-size: 0.95rem; }
+        h2 { font-size: 1.1rem; margin-bottom: 0.75rem; color: #ccc; }
+        form { background: #141414; border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+        label { display: block; font-size: 0.85rem; color: #999; margin-bottom: 0.3rem; }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.75rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+        input[type="submit"] {
+            padding: 0.5rem 1.25rem;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        input[type="submit"]:hover { background: #1d4ed8; }
+        .note { font-size: 0.8rem; color: #666; margin-top: 1.5rem; }
+        .inline-fields { display: flex; gap: 0.75rem; }
+        .inline-fields > div { flex: 1; }
     </style>
 </head>
-
 <body>
 
-<h1>
+<h1>Airline REST API</h1>
+<p class="subtitle">A RESTful servlet for managing airlines and flights. Built for CS510 at Portland State.</p>
 
-    This page contains a couple of HTML forms that GET and POST to the
-    REST API provided by your project.  These forms are <b>not</b>
-    submitted as part of the project.  You do <b>not</b> have to update
-    them.
+<h2>Search Flights by Airline</h2>
+<form method="get" action="flights">
+    <label for="airline-get">Airline Name</label>
+    <input id="airline-get" name="airline" type="text" placeholder="e.g. Delta" />
+    <input type="submit" value="Search" />
+</form>
 
-</h1>
+<h2>Add a Flight</h2>
+<form method="post" action="flights">
+    <label for="airline-post">Airline Name</label>
+    <input id="airline-post" name="airline" type="text" placeholder="e.g. Delta" />
 
-<h2>
-    These forms let you interact with the simple word/definition REST API that
-    is created by the project archetype.
-</h2>
+    <label for="flightNumber">Flight Number</label>
+    <input id="flightNumber" name="flightNumber" type="number" placeholder="e.g. 42" />
 
+    <div class="inline-fields">
+        <div>
+            <label for="src">Source (3-letter code)</label>
+            <input id="src" name="src" type="text" placeholder="e.g. PDX" maxlength="3" />
+        </div>
+        <div>
+            <label for="dest">Destination (3-letter code)</label>
+            <input id="dest" name="dest" type="text" placeholder="e.g. LAX" maxlength="3" />
+        </div>
+    </div>
 
-<div>
-    <form method="get" action="flights">
-        List all word/definition pairs <input type="submit" definition="Submit"/>
-    </form>
-</div>
+    <label for="depart">Departure (mm/dd/yyyy hh:mm AM/PM)</label>
+    <input id="depart" name="depart" type="text" placeholder="e.g. 01/15/2025 10:30 AM" />
 
-<div>
-    <form method="get" action="flights">
-        List definition for word <input name="word" type="text" size="10" title="word"/>
-        <input type="submit" definition="Submit"/>
-    </form>
-</div>
+    <label for="arrive">Arrival (mm/dd/yyyy hh:mm AM/PM)</label>
+    <input id="arrive" name="arrive" type="text" placeholder="e.g. 01/15/2025 1:45 PM" />
 
-<div>
-    <form method="post" action="flights">
-        Create a new word/definition pair <input name="word" type="text" size="10" title="word"/> /
-        <input name="definition" type="text" size="10" title="definition"/>
-        <input type="submit" definition="Submit"/>
-    </form>
-</div>
+    <input type="submit" value="Add Flight" />
+</form>
+
+<p class="note">Flights are stored in memory and reset when the server restarts. Responses are XML.</p>
 
 </body>
 </html>
