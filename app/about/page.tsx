@@ -4,27 +4,25 @@ export default function About() {
   const photoMoments = [
     {
       src: "/media/about-photo-1.jpg",
-      alt: "Placeholder memory 1",
-      caption: "Placeholder caption about this moment.",
-      detail: "Add where this was, who was there, and why it mattered.",
+      alt: "Cherry Blossoms downtown PDX",
+      caption: "Portlandia did not age well as a show",
     },
     {
       src: "/media/about-photo-2.jpg",
-      alt: "Placeholder memory 2",
-      caption: "Placeholder caption for this throwback.",
-      detail: "Swap in a quick story that adds personality.",
+      alt: "white collar child labor",
+      caption:
+        "here I am writing git before Linus did but i forgot to save and lost it all after a crash",
     },
     {
       src: "/media/about-photo-3.jpg",
-      alt: "Placeholder memory 3",
-      caption: "Placeholder caption for this fun memory.",
-      detail: "Add one sentence about what made this day memorable.",
+      alt: "cookie monster",
+      caption:
+        "Fun Fact: Lebron James left the Heat because Pat Riley took away his cookies",
     },
     {
       src: "/media/about-photo-4.jpg",
-      alt: "Placeholder memory 4",
-      caption: "Placeholder caption for this adventure.",
-      detail: "Mention what you learned, loved, or laughed about here.",
+      alt: "100% UV blocking sunglasses",
+      caption: "Safety first!",
     },
   ];
 
@@ -118,7 +116,11 @@ export default function About() {
                     height={700}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     quality={80}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 )}
 
@@ -152,7 +154,11 @@ export default function About() {
                     height={700}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     quality={80}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 )}
               </article>
