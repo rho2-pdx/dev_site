@@ -1,7 +1,14 @@
 import Image from "next/image";
 
+type PhotoMoment = {
+  src: string;
+  alt: string;
+  caption: string;
+  detail?: string;
+};
+
 export default function About() {
-  const photoMoments = [
+  const photoMoments: PhotoMoment[] = [
     {
       src: "/media/about-photo-1.jpg",
       alt: "Cherry Blossoms downtown PDX",
@@ -135,15 +142,17 @@ export default function About() {
                   <p style={{ marginBottom: "0.45rem", fontWeight: 600 }}>
                     {photo.caption}
                   </p>
-                  <p
-                    style={{
-                      color: "var(--color-text-muted)",
-                      fontSize: "0.95rem",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {photo.detail}
-                  </p>
+                  {photo.detail && (
+                    <p
+                      style={{
+                        color: "var(--color-text-muted)",
+                        fontSize: "0.95rem",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {photo.detail}
+                    </p>
+                  )}
                 </div>
 
                 {!imageFirst && (
