@@ -3,61 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airline REST API</title>
+    <title>Airline REST API — Ryan Houlberg</title>
+    <link rel="stylesheet" href="/shared/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            padding: 2rem;
-            max-width: 700px;
+        *, *::before, *::after { box-sizing: border-box; }
+        .al-main {
+            max-width: 900px;
             margin: 0 auto;
+            padding: 3rem 1.5rem;
         }
-        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
-        p.subtitle { color: #888; margin-bottom: 2rem; font-size: 0.95rem; }
-        h2 { font-size: 1.1rem; margin-bottom: 0.75rem; color: #ccc; }
-        form { background: #141414; border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
-        label { display: block; font-size: 0.85rem; color: #999; margin-bottom: 0.3rem; }
-        input[type="text"], input[type="number"] {
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .al-lead {
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-text-muted);
+        }
+        form.shared-card {
+            margin-bottom: 1rem;
+        }
+        form.shared-card label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0.3rem;
+        }
+        form.shared-card input[type="text"],
+        form.shared-card input[type="number"],
+        form.shared-card input[type="datetime-local"] {
             width: 100%;
             padding: 0.5rem;
             margin-bottom: 0.75rem;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: #e0e0e0;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            color: var(--color-text);
+            font-size: 0.9rem;
+            font-family: var(--font-body);
+            color-scheme: light;
+        }
+        form.shared-card input[type="submit"].shared-btn {
+            margin-top: 0.25rem;
+        }
+        .al-note {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-top: 1.5rem;
+        }
+        .inline-fields {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .inline-fields > div {
+            flex: 1;
+        }
+        .al-search-panel {
+            margin: 1rem 0 2rem;
+        }
+        .al-search-panel[hidden] {
+            display: none !important;
+        }
+        .al-alert {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.75rem;
             font-size: 0.9rem;
         }
-        input[type="submit"] {
-            padding: 0.5rem 1.25rem;
-            background: #2563eb;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
+        .al-alert-warn {
+            background: var(--color-accent-light);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
         }
-        input[type="submit"]:hover { background: #1d4ed8; }
-        .note { font-size: 0.8rem; color: #666; margin-top: 1.5rem; }
-        .inline-fields { display: flex; gap: 0.75rem; }
-        .inline-fields > div { flex: 1; }
+        .al-flights-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        .al-flights-table th,
+        .al-flights-table td {
+            border: 1px solid var(--color-border);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .al-flights-table th {
+            background: var(--color-bg-secondary);
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+        .al-search-panel h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+        details.al-raw-xml {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+        details.al-raw-xml pre {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
 
+<nav class="shared-site-nav">
+    <div class="shared-site-nav-inner">
+        <a href="/" class="shared-site-nav-home">ryan houlberg</a>
+        <a href="/projects" class="shared-site-nav-back">← projects</a>
+    </div>
+</nav>
+
+<main class="al-main">
+
 <h1>Airline REST API</h1>
-<p class="subtitle">A RESTful servlet for managing airlines and flights. Built for CS510 at Portland State.</p>
+<p class="al-lead">A RESTful servlet for managing airlines and flights. Built for CS510 at Portland State.</p>
 
 <h2>Search Flights by Airline</h2>
-<form method="get" action="flights">
+<form id="search-form" class="shared-card" method="get" action="flights">
     <label for="airline-get">Airline Name</label>
-    <input id="airline-get" name="airline" type="text" placeholder="e.g. Delta" />
-    <input type="submit" value="Search" />
+    <input id="airline-get" name="airline" type="text" placeholder="e.g. Delta" autocomplete="off" />
+    <input type="submit" class="shared-btn" value="Search" />
 </form>
 
+<div id="search-results" class="al-search-panel shared-card" hidden aria-live="polite"></div>
+
 <h2>Add a Flight</h2>
-<form method="post" action="flights">
+<form id="add-flight-form" class="shared-card" method="post" action="flights">
     <label for="airline-post">Airline Name</label>
     <input id="airline-post" name="airline" type="text" placeholder="e.g. Delta" />
 
@@ -75,16 +165,206 @@
         </div>
     </div>
 
-    <label for="depart">Departure (mm/dd/yyyy hh:mm AM/PM)</label>
-    <input id="depart" name="depart" type="text" placeholder="e.g. 01/15/2025 10:30 AM" />
+    <label for="depart-picker">Departure</label>
+    <input id="depart-picker" type="datetime-local" step="60" required
+           title="Choose departure date and time" />
+    <input type="hidden" name="depart" id="depart" value="" />
 
-    <label for="arrive">Arrival (mm/dd/yyyy hh:mm AM/PM)</label>
-    <input id="arrive" name="arrive" type="text" placeholder="e.g. 01/15/2025 1:45 PM" />
+    <label for="arrive-picker">Arrival</label>
+    <input id="arrive-picker" type="datetime-local" step="60" required
+           title="Choose arrival date and time" />
+    <input type="hidden" name="arrive" id="arrive" value="" />
 
-    <input type="submit" value="Add Flight" />
+    <input type="submit" class="shared-btn" value="Add Flight" />
 </form>
 
-<p class="note">Flights are stored in memory and reset when the server restarts. Responses are XML.</p>
+<p class="al-note">Flights are stored in memory and reset when the server restarts. Responses are XML.</p>
+
+</main>
+
+<script>
+(function () {
+    var searchForm = document.getElementById('search-form');
+    var searchResults = document.getElementById('search-results');
+    var airlineGet = document.getElementById('airline-get');
+
+    function formatDepartArrive(el) {
+        var dateEl = el.getElementsByTagName('date')[0];
+        var timeEl = el.getElementsByTagName('time')[0];
+        if (!dateEl || !timeEl) return '—';
+        var month = dateEl.getAttribute('month');
+        var day = dateEl.getAttribute('day');
+        var year = dateEl.getAttribute('year');
+        var hour24 = parseInt(timeEl.getAttribute('hour'), 10);
+        var minute = parseInt(timeEl.getAttribute('minute'), 10);
+        var ampm = hour24 >= 12 ? 'PM' : 'AM';
+        var h = hour24 % 12;
+        if (h === 0) h = 12;
+        var minStr = minute < 10 ? '0' + minute : String(minute);
+        return month + '/' + day + '/' + year + ' ' + h + ':' + minStr + ' ' + ampm;
+    }
+
+    function showSearchNotFound(name) {
+        searchResults.innerHTML = '';
+        var p = document.createElement('p');
+        p.className = 'al-alert al-alert-warn';
+        var msg = name.length
+            ? 'No airline named "' + name + '" is in the system. Add a flight first, or check the spelling.'
+            : 'No airline matched your search. Add a flight first, or check the spelling.';
+        p.appendChild(document.createTextNode(msg));
+        searchResults.appendChild(p);
+        searchResults.hidden = false;
+    }
+
+    function renderSearchResults(xmlText) {
+        var doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+        if (doc.getElementsByTagName('parsererror').length) {
+            searchResults.innerHTML = '';
+            var err = document.createElement('p');
+            err.className = 'al-alert al-alert-warn';
+            err.textContent = 'Could not read the server response.';
+            searchResults.appendChild(err);
+            searchResults.hidden = false;
+            return;
+        }
+        var nameNodes = doc.getElementsByTagName('name');
+        var airlineName = nameNodes.length ? nameNodes[0].textContent : '';
+
+        searchResults.innerHTML = '';
+        var h3 = document.createElement('h3');
+        h3.textContent = 'Results for "' + airlineName + '"';
+        searchResults.appendChild(h3);
+
+        var flights = doc.getElementsByTagName('flight');
+        if (flights.length === 0) {
+            var empty = document.createElement('p');
+            empty.style.color = 'var(--color-text-muted)';
+            empty.style.fontSize = '0.9rem';
+            empty.textContent = 'This airline exists but has no flights yet.';
+            searchResults.appendChild(empty);
+        } else {
+            var table = document.createElement('table');
+            table.className = 'al-flights-table';
+            var thead = document.createElement('thead');
+            var hr = document.createElement('tr');
+            ['Flight', 'From', 'To', 'Departure', 'Arrival'].forEach(function (label) {
+                var th = document.createElement('th');
+                th.textContent = label;
+                hr.appendChild(th);
+            });
+            thead.appendChild(hr);
+            table.appendChild(thead);
+            var tbody = document.createElement('tbody');
+            for (var i = 0; i < flights.length; i++) {
+                var f = flights[i];
+                var tr = document.createElement('tr');
+                function cell(tag) {
+                    var n = f.getElementsByTagName(tag)[0];
+                    var td = document.createElement('td');
+                    td.textContent = n ? n.textContent : '—';
+                    tr.appendChild(td);
+                }
+                cell('number');
+                cell('src');
+                cell('dest');
+                var depTd = document.createElement('td');
+                var dep = f.getElementsByTagName('depart')[0];
+                depTd.textContent = dep ? formatDepartArrive(dep) : '—';
+                tr.appendChild(depTd);
+                var arrTd = document.createElement('td');
+                var arr = f.getElementsByTagName('arrive')[0];
+                arrTd.textContent = arr ? formatDepartArrive(arr) : '—';
+                tr.appendChild(arrTd);
+                tbody.appendChild(tr);
+            }
+            table.appendChild(tbody);
+            searchResults.appendChild(table);
+        }
+
+        var details = document.createElement('details');
+        details.className = 'al-raw-xml';
+        var sum = document.createElement('summary');
+        sum.textContent = 'Raw XML response';
+        details.appendChild(sum);
+        var pre = document.createElement('pre');
+        pre.textContent = xmlText;
+        details.appendChild(pre);
+        searchResults.appendChild(details);
+
+        searchResults.hidden = false;
+    }
+
+    if (searchForm && searchResults && airlineGet) {
+        searchForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var name = airlineGet.value.trim();
+            if (!name) return;
+            searchResults.hidden = true;
+            searchResults.innerHTML = '';
+            fetch('flights?airline=' + encodeURIComponent(name))
+                .then(function (r) {
+                    if (r.status === 404) {
+                        showSearchNotFound(name);
+                        return null;
+                    }
+                    if (!r.ok) {
+                        throw new Error('HTTP ' + r.status);
+                    }
+                    return r.text();
+                })
+                .then(function (text) {
+                    if (text == null) return;
+                    renderSearchResults(text);
+                })
+                .catch(function () {
+                    searchResults.innerHTML = '';
+                    var p = document.createElement('p');
+                    p.className = 'al-alert al-alert-warn';
+                    p.textContent = 'Could not reach the server. Try again.';
+                    searchResults.appendChild(p);
+                    searchResults.hidden = false;
+                });
+        });
+
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('search') === 'missing') {
+            var q = params.get('airline') || '';
+            airlineGet.value = q;
+            showSearchNotFound(q);
+            history.replaceState({}, '', window.location.pathname);
+        }
+    }
+})();
+
+(function () {
+    var form = document.getElementById('add-flight-form');
+    if (!form) return;
+
+    /** Convert datetime-local (YYYY-MM-DDTHH:mm) to M/d/yyyy h:mm a for the servlet. */
+    function formatForServlet(value) {
+        if (!value) return '';
+        var parts = value.split('T');
+        if (parts.length !== 2) return value;
+        var dp = parts[0].split('-');
+        var year = parseInt(dp[0], 10);
+        var month = parseInt(dp[1], 10);
+        var day = parseInt(dp[2], 10);
+        var tp = parts[1].split(':');
+        var hour24 = parseInt(tp[0], 10);
+        var minute = parseInt(tp[1], 10);
+        var ampm = hour24 >= 12 ? 'PM' : 'AM';
+        var h = hour24 % 12;
+        if (h === 0) h = 12;
+        var minStr = minute < 10 ? '0' + minute : String(minute);
+        return month + '/' + day + '/' + year + ' ' + h + ':' + minStr + ' ' + ampm;
+    }
+
+    form.addEventListener('submit', function () {
+        document.getElementById('depart').value = formatForServlet(document.getElementById('depart-picker').value);
+        document.getElementById('arrive').value = formatForServlet(document.getElementById('arrive-picker').value);
+    });
+})();
+</script>
 
 </body>
 </html>

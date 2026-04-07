@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ public class AirlineServlet extends HttpServlet {
   static final String DEPARTURE_PARAMETER = "depart"; // departure time
   static final String ARRIVAL_PARAMETER = "arrive"; // arrival time
 
+  private static final String SEC_FETCH_MODE = "Sec-Fetch-Mode";
 
   private final Map<String, Airline> airlines = new HashMap<>(); //map flights to airlines
 
@@ -34,16 +37,45 @@ public class AirlineServlet extends HttpServlet {
    */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/plain");
-
     String airlineName = getParameter(AIRLINE_PARAMETER, request);
-    if (airlineName != null) {
-      log("GET " + airlineName);
-      writeAirline(airlineName, response);
-
-    } else {
+    if (airlineName == null) {
       missingRequiredParameter(response, AIRLINE_PARAMETER);
+      return;
     }
+
+    log("GET " + airlineName);
+    Airline airline = this.airlines.get(airlineName);
+
+    if (airline == null) {
+      if (isBrowserDocumentNavigation(request)) {
+        response.sendRedirect("../?search=missing&airline=" + URLEncoder.encode(airlineName, StandardCharsets.UTF_8));
+      } else {
+        response.resetBuffer();
+        response.setContentType("text/plain;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        PrintWriter pw = response.getWriter();
+        pw.print("Airline not found: ");
+        pw.print(airlineName);
+        pw.flush();
+      }
+      return;
+    }
+
+    if (isBrowserDocumentNavigation(request)) {
+      writeAirlineHtmlPage(airline, response);
+    } else {
+      response.setContentType("text/plain;charset=UTF-8");
+      writeAirlineXml(airline, response);
+      response.setStatus(HttpServletResponse.SC_OK);
+    }
+  }
+
+  /**
+   * Full page loads from the HTML form send Sec-Fetch-Mode: navigate. API / fetch clients do not.
+   */
+  @VisibleForTesting
+  static boolean isBrowserDocumentNavigation(HttpServletRequest request) {
+    return "navigate".equalsIgnoreCase(request.getHeader(SEC_FETCH_MODE));
   }
 
   /**
@@ -151,26 +183,73 @@ public class AirlineServlet extends HttpServlet {
     response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, message);
   }
 
-  /**
-   *
-   * @param airlineName name of airline
-   * @param response confirmation of writing
-   * @throws IOException if can't write
-   */
-  private void writeAirline(String airlineName, HttpServletResponse response) throws IOException {
-    Airline airline = this.airlines.get(airlineName);
+  private void writeAirlineXml(Airline airline, HttpServletResponse response) throws IOException {
+    PrintWriter pw = response.getWriter();
+    XmlDumper dumper = new XmlDumper(pw);
+    dumper.dump(airline);
+    pw.flush();
+  }
 
-    if (airline == null) {
-      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+  private void writeAirlineHtmlPage(Airline airline, HttpServletResponse response) throws IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    response.setStatus(HttpServletResponse.SC_OK);
+    PrintWriter out = response.getWriter();
+    String safeName = escapeHtml(airline.getName());
 
+    out.println("<!DOCTYPE html>");
+    out.println("<html lang=\"en\">");
+    out.println("<head>");
+    out.println("<meta charset=\"UTF-8\">");
+    out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+    out.println("<title>Flights — " + safeName + "</title>");
+    out.println("<link rel=\"stylesheet\" href=\"/shared/styles.css\">");
+    out.println("<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">");
+    out.println("<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>");
+    out.println("<link href=\"https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Lato:wght@400;700&display=swap\" rel=\"stylesheet\">");
+    out.println("<style>");
+    out.println(".al-main { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; }");
+    out.println("table.al-flights { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }");
+    out.println("table.al-flights th, table.al-flights td { border: 1px solid var(--color-border); padding: 0.5rem; text-align: left; }");
+    out.println("table.al-flights th { background: var(--color-bg-secondary); color: var(--color-text-muted); }");
+    out.println(".al-back { margin-top: 1.5rem; font-size: 0.9rem; }");
+    out.println("</style>");
+    out.println("</head><body>");
+    out.println("<nav class=\"shared-site-nav\"><div class=\"shared-site-nav-inner\">");
+    out.println("<a href=\"/\" class=\"shared-site-nav-home\">ryan houlberg</a>");
+    out.println("<a href=\"/projects\" class=\"shared-site-nav-back\">← projects</a>");
+    out.println("</div></nav>");
+    out.println("<main class=\"al-main\">");
+    out.println("<h1>Flights for " + safeName + "</h1>");
+    if (airline.getFlights().isEmpty()) {
+      out.println("<p>This airline has no flights yet.</p>");
     } else {
-      PrintWriter pw = response.getWriter();
-
-      XmlDumper dumper = new XmlDumper(pw);
-      dumper.dump(airline);
-
-      response.setStatus(HttpServletResponse.SC_OK);
+      out.println("<table class=\"al-flights\"><thead><tr>");
+      out.println("<th>Flight</th><th>From</th><th>To</th><th>Departure</th><th>Arrival</th>");
+      out.println("</tr></thead><tbody>");
+      for (Flight f : airline.getFlights()) {
+        out.println("<tr>");
+        out.println("<td>" + f.getNumber() + "</td>");
+        out.println("<td>" + escapeHtml(f.getSource()) + "</td>");
+        out.println("<td>" + escapeHtml(f.getDestination()) + "</td>");
+        out.println("<td>" + escapeHtml(f.getDepartureString()) + "</td>");
+        out.println("<td>" + escapeHtml(f.getArrivalString()) + "</td>");
+        out.println("</tr>");
+      }
+      out.println("</tbody></table>");
     }
+    out.println("<p class=\"al-back\"><a href=\"../\">← Back to Airline REST API</a></p>");
+    out.println("</main></body></html>");
+    out.flush();
+  }
+
+  private static String escapeHtml(String s) {
+    if (s == null) {
+      return "";
+    }
+    return s.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\"", "&quot;");
   }
 
   /**

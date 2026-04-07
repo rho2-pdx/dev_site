@@ -117,4 +117,59 @@ class AirlineServletTest {
     verify(response).sendError(eq(HttpServletResponse.SC_PRECONDITION_FAILED), anyString());
   }
 
+  @Test
+  void getMissingAirlineReturns404ForNonBrowserClients() throws IOException {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_PARAMETER)).thenReturn("Nobody");
+    when(request.getHeader("Sec-Fetch-Mode")).thenReturn(null);
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+
+    servlet.doGet(request, response);
+
+    verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+    assertThat(stringWriter.toString(), containsString("Nobody"));
+  }
+
+  @Test
+  void getMissingAirlineRedirectsFullPageNavigation() throws IOException {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_PARAMETER)).thenReturn("deez");
+    when(request.getHeader("Sec-Fetch-Mode")).thenReturn("navigate");
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+
+    servlet.doGet(request, response);
+
+    verify(response).sendRedirect("../?search=missing&airline=deez");
+  }
+
+  @Test
+  void getExistingAirlineReturnsHtmlForFullPageNavigation() throws IOException {
+    Airline airline = new Airline(airlineName);
+    Flight flight = new Flight(airlineName, Integer.parseInt(flightNumber), source, destination, departure, arrival);
+    airline.addFlight(flight);
+    servlet.addAirline(airline);
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_PARAMETER)).thenReturn(airlineName);
+    when(request.getHeader("Sec-Fetch-Mode")).thenReturn("navigate");
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+
+    servlet.doGet(request, response);
+
+    verify(response).setContentType("text/html;charset=UTF-8");
+    String html = stringWriter.toString();
+    assertThat(html, containsString("<table class=\"al-flights\">"));
+    assertThat(html, containsString(airlineName));
+    assertThat(html, containsString(source));
+  }
+
 }

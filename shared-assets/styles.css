@@ -80,3 +80,37 @@ a:hover {
 .shared-btn:hover {
     background: var(--color-accent);
 }
+
+/* Sticky header for containerized apps (matches poem-generator / portfolio nav) */
+.shared-site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 2px solid var(--color-border);
+    background-color: var(--color-bg);
+}
+
+.shared-site-nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shared-site-nav-home {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+}
+
+.shared-site-nav-home:hover {
+    color: var(--color-accent-dim);
+}
+
+.shared-site-nav-back {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
