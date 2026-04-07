@@ -118,6 +118,39 @@ class AirlineServletTest {
   }
 
   @Test
+  void getWithoutAirlineRedirectsBrowserToIndex() throws IOException {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_PARAMETER)).thenReturn(null);
+    when(request.getHeader("Sec-Fetch-Mode")).thenReturn("navigate");
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+
+    servlet.doGet(request, response);
+
+    verify(response).sendRedirect("../");
+    verify(response, never()).sendError(anyInt(), anyString());
+  }
+
+  @Test
+  void postFlightRedirectsBrowserToIndexWithFlashParams() throws IOException {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(flightNumber);
+    when(request.getParameter(AirlineServlet.SOURCE_PARAMETER)).thenReturn(source);
+    when(request.getParameter(AirlineServlet.DESTINATION_PARAMETER)).thenReturn(destination);
+    when(request.getParameter(AirlineServlet.DEPARTURE_PARAMETER)).thenReturn(departure);
+    when(request.getParameter(AirlineServlet.ARRIVAL_PARAMETER)).thenReturn(arrival);
+    when(request.getHeader("Sec-Fetch-Mode")).thenReturn("navigate");
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+
+    servlet.doPost(request, response);
+
+    verify(response).sendRedirect("../?added=1&airline=Airline");
+    verify(response, never()).setStatus(HttpServletResponse.SC_OK);
+  }
+
+  @Test
   void getMissingAirlineReturns404ForNonBrowserClients() throws IOException {
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameter(AirlineServlet.AIRLINE_PARAMETER)).thenReturn("Nobody");
@@ -135,16 +168,23 @@ class AirlineServletTest {
   }
 
   @Test
-  void getMissingAirlineRedirectsFullPageNavigation() throws IOException {
+  void getMissingAirlineReturnsHtmlForFullPageNavigation() throws IOException {
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getParameter(AirlineServlet.AIRLINE_PARAMETER)).thenReturn("deez");
     when(request.getHeader("Sec-Fetch-Mode")).thenReturn("navigate");
 
     HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
 
     servlet.doGet(request, response);
 
-    verify(response).sendRedirect("../?search=missing&airline=deez");
+    verify(response).setContentType("text/html;charset=UTF-8");
+    String html = stringWriter.toString();
+    assertThat(html, containsString("Airline not found"));
+    assertThat(html, containsString("deez"));
+    assertThat(html, containsString("Back to Airline REST API"));
   }
 
   @Test

@@ -39,7 +39,11 @@ public class AirlineServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String airlineName = getParameter(AIRLINE_PARAMETER, request);
     if (airlineName == null) {
-      missingRequiredParameter(response, AIRLINE_PARAMETER);
+      if (isBrowserDocumentNavigation(request)) {
+        response.sendRedirect("../");
+      } else {
+        missingRequiredParameter(response, AIRLINE_PARAMETER);
+      }
       return;
     }
 
@@ -48,7 +52,7 @@ public class AirlineServlet extends HttpServlet {
 
     if (airline == null) {
       if (isBrowserDocumentNavigation(request)) {
-        response.sendRedirect("../?search=missing&airline=" + URLEncoder.encode(airlineName, StandardCharsets.UTF_8));
+        writeAirlineNotFoundHtmlPage(airlineName, response);
       } else {
         response.resetBuffer();
         response.setContentType("text/plain;charset=UTF-8");
@@ -88,8 +92,6 @@ public class AirlineServlet extends HttpServlet {
    */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/plain");
-
     // Check for required parameters.
     String airlineName = getParameter(AIRLINE_PARAMETER, request);
     if (airlineName == null) {
@@ -141,7 +143,12 @@ public class AirlineServlet extends HttpServlet {
     Flight flight = new Flight(airlineName, flightNumber, source, destination, departure, arrival);
     airline.addFlight(flight);
 
-    // Write a response back to the client.
+    if (isBrowserDocumentNavigation(request)) {
+      response.sendRedirect("../?added=1&airline=" + URLEncoder.encode(airlineName, StandardCharsets.UTF_8));
+      return;
+    }
+
+    response.setContentType("text/plain;charset=UTF-8");
     PrintWriter pw = response.getWriter();
     pw.println("Flight added: " + flight.toString());
     pw.flush();
@@ -188,6 +195,43 @@ public class AirlineServlet extends HttpServlet {
     XmlDumper dumper = new XmlDumper(pw);
     dumper.dump(airline);
     pw.flush();
+  }
+
+  private void writeAirlineNotFoundHtmlPage(String airlineName, HttpServletResponse response) throws IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    response.setStatus(HttpServletResponse.SC_OK);
+    PrintWriter out = response.getWriter();
+    String safe = escapeHtml(airlineName);
+
+    out.println("<!DOCTYPE html>");
+    out.println("<html lang=\"en\">");
+    out.println("<head>");
+    out.println("<meta charset=\"UTF-8\">");
+    out.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+    out.println("<title>No airline found</title>");
+    out.println("<link rel=\"stylesheet\" href=\"/shared/styles.css\">");
+    out.println("<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">");
+    out.println("<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>");
+    out.println("<link href=\"https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Lato:wght@400;700&display=swap\" rel=\"stylesheet\">");
+    out.println("<style>");
+    out.println(".al-main { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; }");
+    out.println(".al-warn { padding: 1rem 1.25rem; background: var(--color-accent-light); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin: 1rem 0; }");
+    out.println(".al-back { margin-top: 1.5rem; font-size: 0.9rem; }");
+    out.println("</style>");
+    out.println("</head><body>");
+    out.println("<nav class=\"shared-site-nav\"><div class=\"shared-site-nav-inner\">");
+    out.println("<a href=\"/\" class=\"shared-site-nav-home\">ryan houlberg</a>");
+    out.println("<a href=\"/projects\" class=\"shared-site-nav-back\">← projects</a>");
+    out.println("</div></nav>");
+    out.println("<main class=\"al-main\">");
+    out.println("<h1>Airline not found</h1>");
+    out.println("<div class=\"al-warn\" role=\"status\">");
+    out.println("<p>There is no airline named <strong>\"" + safe + "\"</strong> in the system yet.</p>");
+    out.println("<p style=\"margin-top:0.75rem;font-size:0.9rem;color:var(--color-text-muted);\">Add a flight under that name first, or try a different search.</p>");
+    out.println("</div>");
+    out.println("<p class=\"al-back\"><a href=\"../\">← Back to Airline REST API</a></p>");
+    out.println("</main></body></html>");
+    out.flush();
   }
 
   private void writeAirlineHtmlPage(Airline airline, HttpServletResponse response) throws IOException {

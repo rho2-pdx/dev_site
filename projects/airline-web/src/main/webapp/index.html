@@ -84,6 +84,17 @@
             color: var(--color-text);
             border: 1px solid var(--color-border);
         }
+        .al-alert-success {
+            background: var(--color-bg-secondary);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+        .al-flash {
+            margin-bottom: 1.25rem;
+        }
+        .al-flash[hidden] {
+            display: none !important;
+        }
         .al-flights-table {
             width: 100%;
             border-collapse: collapse;
@@ -136,6 +147,8 @@
 
 <h1>Airline REST API</h1>
 <p class="al-lead">A RESTful servlet for managing airlines and flights. Built for CS510 at Portland State.</p>
+
+<div id="flash-messages" class="al-flash" hidden aria-live="polite"></div>
 
 <h2>Search Flights by Airline</h2>
 <form id="search-form" class="shared-card" method="get" action="flights">
@@ -325,19 +338,12 @@
                     searchResults.hidden = false;
                 });
         });
-
-        var params = new URLSearchParams(window.location.search);
-        if (params.get('search') === 'missing') {
-            var q = params.get('airline') || '';
-            airlineGet.value = q;
-            showSearchNotFound(q);
-            history.replaceState({}, '', window.location.pathname);
-        }
     }
 })();
 
 (function () {
     var form = document.getElementById('add-flight-form');
+    var flash = document.getElementById('flash-messages');
     if (!form) return;
 
     /** Convert datetime-local (YYYY-MM-DDTHH:mm) to M/d/yyyy h:mm a for the servlet. */
@@ -359,9 +365,63 @@
         return month + '/' + day + '/' + year + ' ' + h + ':' + minStr + ' ' + ampm;
     }
 
-    form.addEventListener('submit', function () {
+    function showAddSuccess(airlineName) {
+        if (!flash) return;
+        flash.innerHTML = '';
+        var p = document.createElement('p');
+        p.className = 'al-alert al-alert-success';
+        var label = airlineName ? '"' + airlineName + '"' : 'that airline';
+        p.appendChild(document.createTextNode('Flight added for ' + label + '. Search for it above to see XML, or add another flight below.'));
+        flash.appendChild(p);
+        flash.hidden = false;
+        flash.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function showAddError(msg) {
+        if (!flash) return;
+        flash.innerHTML = '';
+        var p = document.createElement('p');
+        p.className = 'al-alert al-alert-warn';
+        p.textContent = msg || 'Could not add flight. Check fields and try again.';
+        flash.appendChild(p);
+        flash.hidden = false;
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('added') === '1' && flash) {
+        showAddSuccess(params.get('airline') || '');
+        history.replaceState({}, '', window.location.pathname);
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
         document.getElementById('depart').value = formatForServlet(document.getElementById('depart-picker').value);
         document.getElementById('arrive').value = formatForServlet(document.getElementById('arrive-picker').value);
+
+        var fd = new FormData(form);
+        fetch('flights', { method: 'POST', body: fd })
+            .then(function (r) {
+                if (r.ok) return r.text();
+                return r.text().then(function (t) {
+                    var err = new Error(t || ('HTTP ' + r.status));
+                    err.status = r.status;
+                    throw err;
+                });
+            })
+            .then(function () {
+                var name = document.getElementById('airline-post').value.trim();
+                showAddSuccess(name);
+                form.reset();
+                document.getElementById('depart-picker').value = '';
+                document.getElementById('arrive-picker').value = '';
+            })
+            .catch(function (err) {
+                if (err.status === 412) {
+                    showAddError('Missing or invalid form data.');
+                } else {
+                    showAddError('Could not reach the server or the flight was rejected. Check airport codes and times.');
+                }
+            });
     });
 })();
 </script>
