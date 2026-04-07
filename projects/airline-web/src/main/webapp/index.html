@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airline REST API — Ryan Houlberg</title>
     <link rel="stylesheet" href="/shared/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -54,6 +55,10 @@
         }
         form.shared-card input[type="submit"].shared-btn {
             margin-top: 0.25rem;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff;
+            font-weight: 700;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
         }
         .al-note {
             font-size: 0.8rem;
@@ -171,9 +176,19 @@
             color: var(--color-text);
             margin-bottom: 0.3rem;
         }
-        .al-schedule-row input[type="datetime-local"] {
+        .al-schedule-row input[type="datetime-local"],
+        .al-schedule-row input[type="time"],
+        .al-schedule-row input[type="text"] {
             width: 100%;
             margin-bottom: 0;
+        }
+        .al-schedule-range {
+            flex: 2 1 320px;
+            min-width: 220px;
+        }
+        .al-schedule-time {
+            flex: 1 1 160px;
+            min-width: 140px;
         }
         .al-schedule-arrow {
             flex: 0 0 auto;
@@ -185,7 +200,7 @@
             font-weight: 600;
             user-select: none;
         }
-        @media (max-width: 540px) {
+        @media (max-width: 720px) {
             .al-schedule-arrow {
                 width: 100%;
                 text-align: center;
@@ -241,18 +256,25 @@
 
     <fieldset class="al-schedule">
         <legend>Dates &amp; times</legend>
-        <p class="al-schedule-hint">Choose when the flight leaves and lands — same idea as airline sites (outbound segment in one row).</p>
+        <p class="al-schedule-hint">Pick both dates in one calendar (depart then arrive), then set times. Times default to noon.</p>
         <div class="al-schedule-row" role="group" aria-label="Departure and arrival date and time">
-            <div class="al-schedule-segment">
-                <label class="al-schedule-label" for="depart-picker">Depart</label>
-                <input id="depart-picker" type="datetime-local" step="60" required
-                       title="Departure date and time" autocomplete="off" />
+            <div class="al-schedule-segment al-schedule-range">
+                <label class="al-schedule-label" for="date-range-picker">Departure date → Arrival date</label>
+                <input id="date-range-picker" type="text" required
+                       placeholder="Select departure then arrival date"
+                       title="Pick departure and arrival dates in one calendar"
+                       autocomplete="off" />
             </div>
             <span class="al-schedule-arrow" aria-hidden="true" title="to">→</span>
-            <div class="al-schedule-segment">
-                <label class="al-schedule-label" for="arrive-picker">Arrive</label>
-                <input id="arrive-picker" type="datetime-local" step="60" required
-                       title="Arrival date and time" autocomplete="off" />
+            <div class="al-schedule-segment al-schedule-time">
+                <label class="al-schedule-label" for="depart-time">Departure time</label>
+                <input id="depart-time" type="time" step="60" value="12:00" required
+                       title="Departure time" autocomplete="off" />
+            </div>
+            <div class="al-schedule-segment al-schedule-time">
+                <label class="al-schedule-label" for="arrive-time">Arrival time</label>
+                <input id="arrive-time" type="time" step="60" value="12:00" required
+                       title="Arrival time" autocomplete="off" />
             </div>
         </div>
         <input type="hidden" name="depart" id="depart" value="" />
@@ -266,6 +288,7 @@
 
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
 (function () {
     var searchForm = document.getElementById('search-form');
@@ -415,6 +438,10 @@
 (function () {
     var form = document.getElementById('add-flight-form');
     var flash = document.getElementById('flash-messages');
+    var rangePickerEl = document.getElementById('date-range-picker');
+    var departTimeEl = document.getElementById('depart-time');
+    var arriveTimeEl = document.getElementById('arrive-time');
+    var selectedRangeDates = [];
     if (!form) return;
 
     /** Convert datetime-local (YYYY-MM-DDTHH:mm) to M/d/yyyy h:mm a for the servlet. */
@@ -472,22 +499,68 @@
         return new Date(d[0], d[1] - 1, d[2], t[0], t[1] || 0, 0, 0);
     }
 
+    function toLocalDatePart(dateObj) {
+        var y = dateObj.getFullYear();
+        var m = String(dateObj.getMonth() + 1).padStart(2, '0');
+        var d = String(dateObj.getDate()).padStart(2, '0');
+        return y + '-' + m + '-' + d;
+    }
+
+    if (window.flatpickr && rangePickerEl) {
+        flatpickr(rangePickerEl, {
+            mode: 'range',
+            dateFormat: 'Y-m-d',
+            altInput: true,
+            altFormat: 'M j, Y',
+            minDate: 'today',
+            onChange: function (selectedDates) {
+                selectedRangeDates = selectedDates || [];
+            }
+        });
+    }
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var depVal = document.getElementById('depart-picker').value;
-        var arrVal = document.getElementById('arrive-picker').value;
+        var airline = document.getElementById('airline-post').value.trim();
+        var flightNumber = document.getElementById('flightNumber').value.trim();
+        var src = document.getElementById('src').value.trim().toUpperCase();
+        var dest = document.getElementById('dest').value.trim().toUpperCase();
+        var depDate = selectedRangeDates[0];
+        var arrDate = selectedRangeDates[1];
+        var depTime = departTimeEl ? departTimeEl.value : '';
+        var arrTime = arriveTimeEl ? arriveTimeEl.value : '';
+        var depVal = depDate ? toLocalDatePart(depDate) + 'T' + depTime : '';
+        var arrVal = arrDate ? toLocalDatePart(arrDate) + 'T' + arrTime : '';
         var depDt = parseLocalDateTime(depVal);
         var arrDt = parseLocalDateTime(arrVal);
+        if (!airline || !flightNumber || !src || !dest || !depDate || !arrDate || !depTime || !arrTime) {
+            showAddError('Please fill out all fields.');
+            return;
+        }
         if (depDt && arrDt && arrDt <= depDt) {
             showAddError('Arrival must be after departure.');
             return;
         }
 
-        document.getElementById('depart').value = formatForServlet(depVal);
-        document.getElementById('arrive').value = formatForServlet(arrVal);
+        var depart = formatForServlet(depVal);
+        var arrive = formatForServlet(arrVal);
+        document.getElementById('depart').value = depart;
+        document.getElementById('arrive').value = arrive;
 
-        var fd = new FormData(form);
-        fetch('flights', { method: 'POST', body: fd })
+        // Build payload explicitly so required servlet params are always present.
+        var payload = new URLSearchParams();
+        payload.set('airline', airline);
+        payload.set('flightNumber', flightNumber);
+        payload.set('src', src);
+        payload.set('dest', dest);
+        payload.set('depart', depart);
+        payload.set('arrive', arrive);
+
+        fetch('flights', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            body: payload.toString()
+        })
             .then(function (r) {
                 if (r.ok) return r.text();
                 return r.text().then(function (t) {
@@ -497,15 +570,18 @@
                 });
             })
             .then(function () {
-                var name = document.getElementById('airline-post').value.trim();
-                showAddSuccess(name);
+                showAddSuccess(airline);
                 form.reset();
-                document.getElementById('depart-picker').value = '';
-                document.getElementById('arrive-picker').value = '';
+                if (rangePickerEl && rangePickerEl._flatpickr) {
+                    rangePickerEl._flatpickr.clear();
+                }
+                selectedRangeDates = [];
+                if (departTimeEl) departTimeEl.value = '12:00';
+                if (arriveTimeEl) arriveTimeEl.value = '12:00';
             })
             .catch(function (err) {
                 if (err.status === 412) {
-                    showAddError('Missing or invalid form data.');
+                    showAddError(err.message || 'Missing or invalid form data.');
                 } else {
                     showAddError('Could not reach the server or the flight was rejected. Check airport codes and times.');
                 }
