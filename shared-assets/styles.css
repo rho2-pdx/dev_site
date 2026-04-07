@@ -23,6 +23,8 @@
     --color-accent: #c44d2b;
     --color-accent-dim: #a8412a;
     --color-accent-light: #f3ddd6;
+    /* Text on filled accent buttons (meets contrast on accent-dim / accent) */
+    --color-on-accent: #ffffff;
     --font-display: "Lato", sans-serif;
     --font-body: "IBM Plex Sans", system-ui, sans-serif;
     --radius-sm: 0.375rem;
@@ -68,17 +70,24 @@ a:hover {
     display: inline-block;
     padding: 0.5rem 1rem;
     background: var(--color-accent-dim);
-    color: var(--color-text);
+    color: var(--color-on-accent);
     border: none;
     border-radius: var(--radius-sm);
     font-family: var(--font-body);
     font-size: 0.875rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease;
 }
 
 .shared-btn:hover {
     background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.shared-btn:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 2px;
 }
 
 /* Sticky header for containerized apps (matches poem-generator / portfolio nav) */

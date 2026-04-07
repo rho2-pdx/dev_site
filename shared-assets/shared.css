@@ -22,6 +22,7 @@
     --color-text-muted: #8888a0;
     --color-accent: #64b5f6;
     --color-accent-dim: #3d7ab8;
+    --color-on-accent: #ffffff;
     --font-display: "Lato", "Fira Code", monospace;
     --font-body: "IBM Plex Sans", system-ui, sans-serif;
     --radius-sm: 0.375rem;
@@ -67,17 +68,24 @@ a:hover {
     display: inline-block;
     padding: 0.5rem 1rem;
     background: var(--color-accent-dim);
-    color: var(--color-text);
+    color: var(--color-on-accent);
     border: none;
     border-radius: var(--radius-sm);
     font-family: var(--font-body);
     font-size: 0.875rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease;
 }
 
 .shared-btn:hover {
     background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.shared-btn:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 2px;
 }
 
 .shared-site-nav {

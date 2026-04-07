@@ -30,9 +30,11 @@ export default function About() {
           <Image
             src="/media/profile-photo.jpeg"
             alt="Profile photo"
-            width={1200}
-            height={630}
-            quality={66}
+            /* Display cap ~400px; 800×420 keeps 1200:630 aspect ratio and covers 2× retina. */
+            width={800}
+            height={420}
+            sizes="(max-width: 480px) min(100vw - 3rem, 400px), 400px"
+            quality={70}
             priority
           />
         </div>

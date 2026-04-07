@@ -132,6 +132,67 @@
             font-size: 0.75rem;
             line-height: 1.4;
         }
+        /* One “flight search” style block for departure + arrival */
+        fieldset.al-schedule {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1rem 1rem;
+            margin: 0 0 0.75rem;
+            background: var(--color-surface);
+        }
+        fieldset.al-schedule legend {
+            padding: 0 0.35rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .al-schedule-hint {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin: 0 0 0.65rem;
+            line-height: 1.45;
+        }
+        .al-schedule-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 0.5rem 0.75rem;
+        }
+        .al-schedule-segment {
+            flex: 1 1 200px;
+            min-width: 0;
+        }
+        .al-schedule-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 0.3rem;
+        }
+        .al-schedule-row input[type="datetime-local"] {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .al-schedule-arrow {
+            flex: 0 0 auto;
+            align-self: center;
+            padding: 0 0.15rem 0.35rem;
+            font-size: 1.25rem;
+            line-height: 1;
+            color: var(--color-accent-dim);
+            font-weight: 600;
+            user-select: none;
+        }
+        @media (max-width: 540px) {
+            .al-schedule-arrow {
+                width: 100%;
+                text-align: center;
+                padding: 0.15rem 0;
+                transform: rotate(90deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -178,15 +239,25 @@
         </div>
     </div>
 
-    <label for="depart-picker">Departure</label>
-    <input id="depart-picker" type="datetime-local" step="60" required
-           title="Choose departure date and time" />
-    <input type="hidden" name="depart" id="depart" value="" />
-
-    <label for="arrive-picker">Arrival</label>
-    <input id="arrive-picker" type="datetime-local" step="60" required
-           title="Choose arrival date and time" />
-    <input type="hidden" name="arrive" id="arrive" value="" />
+    <fieldset class="al-schedule">
+        <legend>Dates &amp; times</legend>
+        <p class="al-schedule-hint">Choose when the flight leaves and lands — same idea as airline sites (outbound segment in one row).</p>
+        <div class="al-schedule-row" role="group" aria-label="Departure and arrival date and time">
+            <div class="al-schedule-segment">
+                <label class="al-schedule-label" for="depart-picker">Depart</label>
+                <input id="depart-picker" type="datetime-local" step="60" required
+                       title="Departure date and time" autocomplete="off" />
+            </div>
+            <span class="al-schedule-arrow" aria-hidden="true" title="to">→</span>
+            <div class="al-schedule-segment">
+                <label class="al-schedule-label" for="arrive-picker">Arrive</label>
+                <input id="arrive-picker" type="datetime-local" step="60" required
+                       title="Arrival date and time" autocomplete="off" />
+            </div>
+        </div>
+        <input type="hidden" name="depart" id="depart" value="" />
+        <input type="hidden" name="arrive" id="arrive" value="" />
+    </fieldset>
 
     <input type="submit" class="shared-btn" value="Add Flight" />
 </form>
@@ -393,10 +464,27 @@
         history.replaceState({}, '', window.location.pathname);
     }
 
+    function parseLocalDateTime(value) {
+        if (!value || value.indexOf('T') < 0) return null;
+        var p = value.split('T');
+        var d = p[0].split('-').map(Number);
+        var t = p[1].split(':').map(Number);
+        return new Date(d[0], d[1] - 1, d[2], t[0], t[1] || 0, 0, 0);
+    }
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        document.getElementById('depart').value = formatForServlet(document.getElementById('depart-picker').value);
-        document.getElementById('arrive').value = formatForServlet(document.getElementById('arrive-picker').value);
+        var depVal = document.getElementById('depart-picker').value;
+        var arrVal = document.getElementById('arrive-picker').value;
+        var depDt = parseLocalDateTime(depVal);
+        var arrDt = parseLocalDateTime(arrVal);
+        if (depDt && arrDt && arrDt <= depDt) {
+            showAddError('Arrival must be after departure.');
+            return;
+        }
+
+        document.getElementById('depart').value = formatForServlet(depVal);
+        document.getElementById('arrive').value = formatForServlet(arrVal);
 
         var fd = new FormData(form);
         fetch('flights', { method: 'POST', body: fd })
