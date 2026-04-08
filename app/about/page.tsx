@@ -82,7 +82,7 @@ export default function About() {
           }}
         >
           I know that this is a bagel sandwich but I&apos;m truly a burger
-          fanatic
+          fanatic. Also love bikes, motorcycles, trains, music, and more.
         </p>
       </section>
 
@@ -109,6 +109,7 @@ export default function About() {
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
                   alignItems: "stretch",
+                  gridAutoRows: "minmax(0, auto)",
                   border: "1px solid var(--color-border)",
                   borderRadius: "var(--radius-lg)",
                   overflow: "hidden",
@@ -116,23 +117,30 @@ export default function About() {
                 }}
               >
                 {imageFirst && (
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    width={900}
-                    height={700}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    quality={80}
+                  <div
                     style={{
+                      minWidth: 0,
+                      minHeight: 0,
                       width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
+                      position: "relative",
+                      aspectRatio: "900 / 700",
                     }}
-                  />
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      quality={80}
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 )}
 
                 <div
                   style={{
+                    minWidth: 0,
+                    minHeight: 0,
                     padding: "1.1rem",
                     display: "flex",
                     flexDirection: "column",
@@ -156,19 +164,24 @@ export default function About() {
                 </div>
 
                 {!imageFirst && (
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    width={900}
-                    height={700}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    quality={80}
+                  <div
                     style={{
+                      minWidth: 0,
+                      minHeight: 0,
                       width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
+                      position: "relative",
+                      aspectRatio: "900 / 700",
                     }}
-                  />
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      quality={80}
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 )}
               </article>
             );
