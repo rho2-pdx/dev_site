@@ -5,6 +5,9 @@ type PhotoMoment = {
   alt: string;
   caption: string;
   detail?: string;
+  /** Intrinsic pixel size of the file (for layout + `next/image`). */
+  width: number;
+  height: number;
 };
 
 export default function About() {
@@ -13,23 +16,31 @@ export default function About() {
       src: "/media/about-photo-1.jpg",
       alt: "Cherry Blossoms downtown PDX",
       caption: "Portlandia did not age well as a show",
+      width: 1024,
+      height: 768,
     },
     {
       src: "/media/about-photo-2.jpg",
       alt: "white collar child labor",
       caption:
         "here I am writing git before Linus did but i forgot to save and lost it all after a crash",
+      width: 1024,
+      height: 710,
     },
     {
       src: "/media/about-photo-3.jpg",
       alt: "cookie monster",
       caption:
         "Fun Fact: Lebron James left the Heat because Pat Riley took away his cookies",
+      width: 768,
+      height: 1024,
     },
     {
       src: "/media/about-photo-4.jpg",
       alt: "100% UV blocking sunglasses",
       caption: "Safety first!",
+      width: 682,
+      height: 1024,
     },
   ];
 
@@ -122,17 +133,21 @@ export default function About() {
                       minWidth: 0,
                       minHeight: 0,
                       width: "100%",
-                      position: "relative",
-                      aspectRatio: "900 / 700",
+                      alignSelf: "start",
                     }}
                   >
                     <Image
                       src={photo.src}
                       alt={photo.alt}
-                      fill
+                      width={photo.width}
+                      height={photo.height}
                       sizes="(max-width: 768px) 100vw, 50vw"
                       quality={80}
-                      style={{ objectFit: "cover" }}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
                     />
                   </div>
                 )}
@@ -169,17 +184,21 @@ export default function About() {
                       minWidth: 0,
                       minHeight: 0,
                       width: "100%",
-                      position: "relative",
-                      aspectRatio: "900 / 700",
+                      alignSelf: "start",
                     }}
                   >
                     <Image
                       src={photo.src}
                       alt={photo.alt}
-                      fill
+                      width={photo.width}
+                      height={photo.height}
                       sizes="(max-width: 768px) 100vw, 50vw"
                       quality={80}
-                      style={{ objectFit: "cover" }}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
                     />
                   </div>
                 )}
