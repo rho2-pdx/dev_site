@@ -69,11 +69,12 @@ export default function Home() {
             marginBottom: "2.5rem",
           }}
         >
-          After 8 &ldquo;grad prep&rdquo; classes and 6 graduate classes at
-          Portland State, I&apos;ve transferred to Georgia Tech&apos;s OMSCS
-          program. Since classes don&apos;t start until the Fall, I finally have
-          time for crushing projects! I hope to do fun stuff, show it off, and
-          learn through repetitive inconsequential failure (off the job training)
+          After 8 &ldquo;grad prep&rdquo; classes and 7 graduate classes at
+          Portland State (3.93 graduate GPA btw), I&apos;ve transferred to
+          Georgia Tech&apos;s OMSCS program. Since classes don&apos;t start
+          until the Fall, I finally have time for crushing projects! I hope to
+          do fun stuff, show it off, and learn through repetitive
+          inconsequential failure (off the job training)
         </p>
 
         <div style={{ display: "flex", gap: "0.75rem" }}>
@@ -237,7 +238,13 @@ export default function Home() {
           }}
         >
           {/* Row 1: Cloudflare */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "0.5rem",
+            }}
+          >
             <div
               style={{
                 padding: "0.6rem 1.5rem",
@@ -247,16 +254,32 @@ export default function Home() {
                 textAlign: "center",
               }}
             >
-              <div style={{ fontWeight: 700, color: "var(--color-text)" }}>Cloudflare</div>
-              <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+              <div style={{ fontWeight: 700, color: "var(--color-text)" }}>
+                Cloudflare
+              </div>
+              <div
+                style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}
+              >
                 DNS + SSL + CDN
               </div>
             </div>
           </div>
 
           {/* Connector */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
-            <div style={{ width: "2px", height: "24px", background: "var(--color-border)" }} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <div
+              style={{
+                width: "2px",
+                height: "24px",
+                background: "var(--color-border)",
+              }}
+            />
           </div>
 
           {/* Row 2: VPS */}
@@ -274,16 +297,26 @@ export default function Home() {
                 marginBottom: "1rem",
               }}
             >
-              <div style={{ fontWeight: 700, color: "var(--color-accent-dim)" }}>
+              <div
+                style={{ fontWeight: 700, color: "var(--color-accent-dim)" }}
+              >
                 Hetzner VPS
               </div>
-              <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+              <div
+                style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}
+              >
                 Germany &middot; Docker Compose
               </div>
             </div>
 
             {/* nginx */}
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "0.5rem",
+              }}
+            >
               <div
                 style={{
                   padding: "0.5rem 1.25rem",
@@ -293,16 +326,35 @@ export default function Home() {
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontWeight: 700, color: "var(--color-text)" }}>nginx</div>
-                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                <div style={{ fontWeight: 700, color: "var(--color-text)" }}>
+                  nginx
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
                   reverse proxy &middot; SSL termination
                 </div>
               </div>
             </div>
 
             {/* Connector splitting */}
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
-              <div style={{ width: "2px", height: "16px", background: "var(--color-border)" }} />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <div
+                style={{
+                  width: "2px",
+                  height: "16px",
+                  background: "var(--color-border)",
+                }}
+              />
             </div>
 
             {/* Horizontal connector bar */}
@@ -377,10 +429,21 @@ export default function Home() {
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontWeight: 700, color: "var(--color-text)", marginBottom: "0.15rem" }}>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    color: "var(--color-text)",
+                    marginBottom: "0.15rem",
+                  }}
+                >
                   Next.js
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
                   site + journal
                 </div>
                 <div
@@ -403,10 +466,21 @@ export default function Home() {
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontWeight: 700, color: "var(--color-text)", marginBottom: "0.15rem" }}>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    color: "var(--color-text)",
+                    marginBottom: "0.15rem",
+                  }}
+                >
                   Flask
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
                   poem generator
                 </div>
                 <div
@@ -429,10 +503,21 @@ export default function Home() {
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontWeight: 700, color: "var(--color-text)", marginBottom: "0.15rem" }}>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    color: "var(--color-text)",
+                    marginBottom: "0.15rem",
+                  }}
+                >
                   Jetty
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
                   airline web
                 </div>
                 <div
@@ -556,9 +641,9 @@ export default function Home() {
               marginTop: "0.75rem",
             }}
           >
-            Lots of repos are private due to academic honesty policies.
-            I&apos;m reviewing and integrating each project into this main dev
-            site repo as I go.
+            Lots of repos are private due to academic honesty policies. I&apos;m
+            reviewing and integrating each project into this main dev site repo
+            as I go.
           </p>
         </div>
         <div

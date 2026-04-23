@@ -35,6 +35,20 @@ CREATE TABLE public.fcolor (
 ALTER TABLE public.fcolor OWNER TO "Cook";
 
 --
+-- Name: fcategory; Type: TABLE; Schema: public; Owner: Cook
+--
+
+CREATE TABLE public.fcategory (
+    id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    category character varying(40) NOT NULL
+);
+
+
+ALTER TABLE public.fcategory OWNER TO "Cook";
+
+
+--
 -- Name: fid; Type: TABLE; Schema: public; Owner: Cook
 --
 
@@ -105,15 +119,7 @@ CREATE TABLE public.fprefs (
     versfinal smallint,
     versletter smallint,
     appvers integer,
-    kitchenof character varying(38),
-    smtpserver character varying(100),
-    emailaddress character varying(100),
-    emailname character varying(100),
-    emailusername character varying(100),
-    emailpassword character varying(100),
-    secureemail smallint,
-    verifyemail smallint,
-    emailport numeric(15,0)
+    kitchenof character varying(38)
 );
 
 
@@ -144,11 +150,7 @@ ALTER TABLE public.frecipe OWNER TO "Cook";
 
 CREATE TABLE public.fuserprefs (
     id integer NOT NULL,
-    username character varying(100),
-    uppusername character varying(100),
-    kitchenof character varying(100),
-    emailaddress character varying(100),
-    emailname character varying(100)
+    kitchenof character varying(100)
 );
 
 
@@ -3147,8 +3149,8 @@ COPY public.fkeyword (id, keyword, recipe_id, uppname) FROM stdin;
 -- Data for Name: fprefs; Type: TABLE DATA; Schema: public; Owner: Cook
 --
 
-COPY public.fprefs (id, created, modified, editcount, versa, versb, versc, versfinal, versletter, appvers, kitchenof, smtpserver, emailaddress, emailname, emailusername, emailpassword, secureemail, verifyemail, emailport) FROM stdin;
-1	2008-05-08 14:30:00	2024-08-01 13:54:00	128	8	0	2	0	4	7	Michael & Marissa Houlberg	s1.supportedns.com	michael@retailengine.com	Michael Houlberg	michael@houlbergdevelopment.com	duosonic-guitar	1	1	465
+COPY public.fprefs (id, created, modified, editcount, versa, versb, versc, versfinal, versletter, appvers, kitchenof) FROM stdin;
+1	2008-05-08 14:30:00	2024-08-01 13:54:00	128	8	0	2	0	4	7	Cookery Public
 \.
 
 
@@ -3473,13 +3475,329 @@ COPY public.frecipe (id, created, modified, editcount, recipename, comment, dire
 -- Data for Name: fuserprefs; Type: TABLE DATA; Schema: public; Owner: Cook
 --
 
-COPY public.fuserprefs (id, username, uppusername, kitchenof, emailaddress, emailname) FROM stdin;
-108	Marissa	MARISSA	Michael & Marissa	marissa@houlbergdevelopment.com	Marissa Houlberg
-109	Ryan	RYAN	Ryan	ryanhoulberg@gmail.com	Ryan Houlberg
-106	Michael	MICHAEL	Michael & Marissa	michael@houlbergdevelopment.com	Michael Houlberg
-110	Laura	LAURA	Laura	houlberglaura@gmail.com	Laura Houlberg
+COPY public.fuserprefs (id, kitchenof) FROM stdin;
+108	Cookery Public
+109	Cookery Public
+106	Cookery Public
+110	Cookery Public
 \.
 
+
+--
+-- Data for Name: fcategory; Type: TABLE DATA; Schema: public; Owner: Cook
+--
+
+COPY public.fcategory (id, recipe_id, category) FROM stdin;
+1	1	Dessert
+2	2	Dessert
+3	3	Entree
+4	4	Soup
+5	5	Sauce
+6	6	Appetizer
+7	7	Drink
+8	8	Drink
+9	9	Drink
+10	10	Sauce
+11	11	Entree
+12	12	Entree
+13	13	Entree
+14	14	Dessert
+15	15	Bread
+16	16	Bread
+17	17	Entree
+18	18	Salad
+19	19	Appetizer
+20	20	Entree
+21	21	Entree
+22	22	Entree
+23	23	Soup
+24	24	Side
+25	25	Entree
+26	26	Bread
+27	27	Appetizer
+28	29	Entree
+29	30	Soup
+30	31	Appetizer
+31	32	Sauce
+32	33	Drink
+33	34	Entree
+34	35	Appetizer
+35	36	Drink
+36	37	Salad
+37	38	Sauce
+38	39	Entree
+39	40	Salad
+40	41	Dessert
+41	42	Bread
+42	43	Dessert
+43	44	Dessert
+44	45	Soup
+45	46	Dessert
+46	48	Entree
+47	49	Entree
+48	50	Soup
+49	51	Bread
+50	52	Dessert
+51	53	Soup
+52	54	Soup
+53	56	Entree
+54	57	Entree
+55	58	Dessert
+56	59	Entree
+57	60	Sauce
+58	61	Dessert
+59	62	Bread
+60	63	Dessert
+61	64	Dessert
+62	65	Salad
+63	66	Soup
+64	67	Bread
+65	68	Breakfast
+66	69	Soup
+67	70	Side
+68	71	Soup
+69	72	Entree
+70	73	Entree
+71	74	Dessert
+72	75	Entree
+73	76	Entree
+74	77	Side
+75	78	Entree
+76	79	Entree
+77	80	Dessert
+78	81	Breakfast
+79	82	Dessert
+80	83	Entree
+81	86	Entree
+82	87	Appetizer
+83	88	Appetizer
+84	89	Side
+85	91	Drink
+86	93	Appetizer
+87	94	Entree
+88	96	Salad
+89	97	Dessert
+90	98	Side
+91	99	Entree
+92	100	Bread
+93	101	Sauce
+94	102	Entree
+95	103	Dessert
+96	104	Entree
+97	105	Bread
+98	106	Sauce
+99	107	Sauce
+100	108	Soup
+101	109	Entree
+102	110	Entree
+103	111	Entree
+104	112	Salad
+105	113	Sauce
+106	114	Side
+107	115	Breakfast
+108	116	Dessert
+109	117	Entree
+110	118	Appetizer
+111	120	Dessert
+112	121	Dessert
+113	122	Entree
+114	123	Entree
+115	124	Dessert
+116	125	Dessert
+117	126	Bread
+118	127	Appetizer
+119	128	Appetizer
+120	130	Entree
+121	131	Dessert
+122	132	Salad
+123	133	Entree
+124	134	Entree
+125	135	Bread
+126	136	Dessert
+127	137	Drink
+128	138	Bread
+129	139	Entree
+130	140	Entree
+131	141	Drink
+132	142	Dessert
+133	143	Entree
+134	144	Dessert
+135	145	Sauce
+136	146	Salad
+137	147	Entree
+138	148	Entree
+139	149	Entree
+140	150	Sauce
+141	151	Sauce
+142	152	Bread
+143	153	Bread
+144	154	Dessert
+145	155	Entree
+146	156	Entree
+147	157	Dessert
+148	158	Dessert
+149	159	Dessert
+150	160	Dessert
+151	161	Sauce
+152	162	Entree
+153	163	Dessert
+154	164	Entree
+155	165	Sauce
+156	166	Entree
+157	167	Appetizer
+158	168	Entree
+159	169	Entree
+160	170	Entree
+161	171	Dessert
+162	172	Entree
+163	173	Entree
+164	174	Sauce
+165	175	Dessert
+166	176	Dessert
+167	177	Entree
+168	178	Entree
+169	179	Dessert
+170	180	Breakfast
+171	181	Entree
+172	182	Entree
+173	183	Dessert
+174	184	Entree
+175	187	Entree
+176	189	Dessert
+177	190	Soup
+178	191	Bread
+179	192	Entree
+180	194	Salad
+181	195	Drink
+182	196	Drink
+183	197	Entree
+184	198	Salad
+185	199	Entree
+186	200	Breakfast
+187	201	Salad
+188	202	Entree
+189	203	Entree
+190	204	Salad
+191	205	Entree
+192	206	Drink
+193	207	Salad
+194	208	Entree
+195	209	Entree
+196	210	Entree
+197	211	Entree
+198	212	Drink
+199	213	Entree
+200	214	Entree
+201	215	Salad
+202	216	Entree
+203	217	Entree
+204	218	Side
+205	219	Dessert
+206	220	Entree
+207	221	Side
+208	222	Entree
+209	223	Sauce
+210	224	Entree
+211	226	Entree
+212	227	Dessert
+213	228	Soup
+214	229	Entree
+215	230	Salad
+216	231	Salad
+217	232	Entree
+218	233	Entree
+219	234	Sauce
+220	235	Entree
+221	236	Salad
+222	237	Entree
+223	238	Salad
+224	239	Salad
+225	240	Appetizer
+226	241	Soup
+227	242	Entree
+228	243	Dessert
+229	244	Entree
+230	245	Entree
+231	246	Soup
+232	247	Entree
+233	248	Side
+234	249	Entree
+235	250	Entree
+236	251	Dessert
+237	252	Side
+238	253	Entree
+239	254	Entree
+240	255	Dessert
+241	256	Soup
+242	257	Sauce
+243	258	Entree
+244	259	Drink
+245	260	Entree
+246	261	Entree
+247	262	Sauce
+248	263	Salad
+249	264	Salad
+250	265	Salad
+251	266	Entree
+252	267	Sauce
+253	268	Entree
+254	269	Entree
+255	270	Entree
+256	271	Dessert
+257	272	Soup
+258	273	Soup
+259	274	Soup
+260	275	Soup
+261	276	Dessert
+262	277	Sauce
+263	278	Bread
+264	279	Entree
+265	280	Entree
+266	281	Dessert
+267	282	Entree
+268	283	Entree
+269	284	Entree
+270	285	Sauce
+271	286	Entree
+272	287	Breakfast
+273	288	Appetizer
+274	289	Entree
+275	290	Entree
+276	291	Dessert
+277	292	Soup
+278	293	Entree
+279	294	Soup
+280	295	Entree
+281	296	Bread
+282	297	Entree
+283	298	Sauce
+284	299	Appetizer
+285	300	Dessert
+286	301	Dessert
+287	302	Salad
+288	303	Side
+289	304	Dessert
+290	305	Entree
+291	306	Soup
+292	307	Appetizer
+293	308	Entree
+294	309	Entree
+295	310	Entree
+296	311	Drink
+297	312	Salad
+298	313	Drink
+299	314	Bread
+300	315	Dessert
+301	316	Bread
+302	317	Entree
+303	318	Dessert
+304	319	Sauce
+305	320	Salad
+306	321	Sauce
+307	322	Salad
+308	323	Entree
+309	324	Entree
+\.
 
 --
 -- PostgreSQL database dump complete

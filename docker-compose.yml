@@ -12,6 +12,7 @@ services:
       - nextjs
       - poem-generator
       - airline-web
+      - cookery
     restart: unless-stopped
 
   nextjs:
@@ -36,4 +37,14 @@ services:
     build: ./projects/airline-web
     expose:
       - "8080"
+    restart: unless-stopped
+
+  cookery:
+    build: ./projects/cookery
+    expose:
+      - "8081"
+    environment:
+      - DATABASE_URL=${COOKERY_DATABASE_URL}
+      - COOKERY_RECIPE_TABLE=${COOKERY_RECIPE_TABLE:-recipes}
+      - PORT=8081
     restart: unless-stopped

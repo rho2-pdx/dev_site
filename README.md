@@ -1,7 +1,7 @@
 # Portfolio Site
 [houlberg.dev](https://houlberg.dev)
 
-Personal developer portfolio built with Next.js, served behind Nginx as a reverse proxy. Containerized projects (Flask, Java, etc.) run alongside the main site and are proxied through Nginx under `/projects/`.
+Personal developer portfolio built with Next.js, served behind Nginx as a reverse proxy. Containerized projects (Flask, Java, Rust, etc.) run alongside the main site and are proxied through Nginx under `/projects/`.
 
 ## Local Development
 
@@ -34,6 +34,7 @@ Nginx (port 80)
 ├── /shared/*              → shared-assets/ (CSS design tokens)
 ├── /projects/poem-generator/*  → Flask container (5000)
 ├── /projects/airline-app/*   → Java (Maven) container (8080)
+├── /projects/cookery/*       → Rust + Axum container (8081)
 └── /*                     → Next.js container (3000)
 ```
 ## SSL

@@ -4,7 +4,7 @@ export default function Projects() {
       name: "Poem Generator",
       href: "/projects/poem-generator/",
       description:
-        "Upload an image and get a poem generated from lyrics matching what it sees.",
+        "Upload an image to generate keywords, which are used to extract lyrics from songs and make an eloquent poem every single time. Built for 'Web Systems' at PSU.",
       stack: [
         { src: "/media/python-5.svg", label: "Python" },
         { src: "/media/flask.svg", label: "Flask" },
@@ -15,10 +15,20 @@ export default function Projects() {
       name: "Airline Web",
       href: "/projects/airline-web/",
       description:
-        "REST API for managing airlines and flights. Add flights, search by route, and get XML responses. Built as a servlet web app for a grad course at Portland State.",
+        "REST API for managing airlines and flights. Add flights, search by route, and get XML responses. Built for 'joy of coding' class at PSU.",
       stack: [
         { src: "/media/java.svg", label: "Java 17" },
         { src: "/media/jetty.svg", label: "Jetty" },
+      ],
+    },
+    {
+      name: "Cookery",
+      href: "/projects/cookery/",
+      description:
+        "family cookbook application, updated with the power of vibes to be more intuitive and easier to use",
+      stack: [
+        { src: "/media/typescript.svg", label: "Rust + Axum" },
+        { src: "/media/nginx-1.svg", label: "Postgres" },
       ],
     },
   ];
