@@ -39,12 +39,28 @@ services:
       - "8080"
     restart: unless-stopped
 
+  cookery-db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=cookery
+      - POSTGRES_PASSWORD=cookery
+      - POSTGRES_DB=cookery
+    volumes:
+      - cookery-db-data:/var/lib/postgresql/data
+      - ./projects/cookery/CookeryData.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+
   cookery:
     build: ./projects/cookery
     expose:
       - "8081"
     environment:
-      - DATABASE_URL=${COOKERY_DATABASE_URL}
+      - DATABASE_URL=postgres://cookery:cookery@cookery-db:5432/cookery
       - COOKERY_RECIPE_TABLE=${COOKERY_RECIPE_TABLE:-recipes}
       - PORT=8081
+    depends_on:
+      - cookery-db
     restart: unless-stopped
+
+volumes:
+  cookery-db-data:
