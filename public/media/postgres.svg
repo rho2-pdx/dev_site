@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Postgres logo">
+  <defs>
+    <linearGradient id="pg-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2f7ed6"/>
+      <stop offset="100%" stop-color="#1f5fa6"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#pg-bg)"/>
+  <path d="M24 20c-4 0-8 5-8 10v8c0 4 4 7 8 7h4v5h8v-5h4c4 0 8-3 8-7v-8c0-5-4-10-8-10H24z" fill="#eaf4ff"/>
+  <circle cx="27" cy="30" r="2.3" fill="#1f5fa6"/>
+  <circle cx="37" cy="30" r="2.3" fill="#1f5fa6"/>
+</svg>

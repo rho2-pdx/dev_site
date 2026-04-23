@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Axum logo">
+  <defs>
+    <linearGradient id="axum-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1b3a5c"/>
+      <stop offset="100%" stop-color="#0f2338"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#axum-bg)"/>
+  <path d="M16 44L26 20L32 33L38 20L48 44" fill="none" stroke="#cfe7ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

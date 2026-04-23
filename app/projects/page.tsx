@@ -19,6 +19,7 @@ export default function Projects() {
       stack: [
         { src: "/media/java.svg", label: "Java 17" },
         { src: "/media/jetty.svg", label: "Jetty" },
+        { src: "/media/rest.svg", label: "REST" },
       ],
     },
     {
@@ -27,8 +28,9 @@ export default function Projects() {
       description:
         "family cookbook application, updated with the power of vibes to be more intuitive and easier to use",
       stack: [
-        { src: "/media/typescript.svg", label: "Rust + Axum" },
-        { src: "/media/nginx-1.svg", label: "Postgres" },
+        { src: "/media/rust.svg", label: "Rust" },
+        { src: "/media/axum.svg", label: "Axum" },
+        { src: "/media/postgres.svg", label: "Postgres" },
       ],
     },
   ];
