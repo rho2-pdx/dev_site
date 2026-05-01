@@ -444,7 +444,7 @@ export default function Home() {
                     color: "var(--color-text-muted)",
                   }}
                 >
-                  site + journal
+                  portfolio site
                 </div>
                 <div
                   style={{

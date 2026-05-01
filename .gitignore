@@ -57,3 +57,8 @@ __pycache__
 
 # the cookery db
 CookeryData-Sun.sql
+
+# Journal (local only; personal content not published to the repo)
+/journal/
+/app/journal/
+/app/api/journal/
