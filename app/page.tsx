@@ -1,11 +1,6 @@
 import Link from "next/link";
 
-const pill = (text: string, variant: "solid" | "accent" = "solid") => ({
-  text,
-  variant,
-});
-
-const confidentSkills = [
+const skills = [
   "C++",
   "Java",
   "Python",
@@ -20,9 +15,6 @@ const confidentSkills = [
   "Google Cloud APIs",
   "CI/CD",
   "SQL",
-];
-
-const learningSkills = [
   "Rust",
   "TypeScript",
   "Next.js",
@@ -113,20 +105,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills — two columns side by side */}
+      {/* Links row — GitHub + LinkedIn side by side */}
       <section
         style={{
           marginBottom: "4rem",
-          background: "var(--color-surface)",
-          border: "2px solid var(--color-border)",
-          borderRadius: "var(--radius-lg)",
-          padding: "2rem",
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: "2rem",
+          gap: "1.5rem",
         }}
       >
-        <div>
+        <div
+          style={{
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "1.5rem",
+          }}
+        >
           <h2
             style={{
               fontFamily: "var(--font-display)",
@@ -137,29 +131,63 @@ export default function Home() {
               marginBottom: "1rem",
             }}
           >
-            Things I feel confident with
+            GitHub
           </h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-            {confidentSkills.map((tech) => (
-              <span
-                key={tech}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
+            }}
+          >
+            {["rho2-pdx", "RyanHoulberg"].map((handle) => (
+              <a
+                key={handle}
+                href={`https://github.com/${handle}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  padding: "0.3rem 0.65rem",
-                  background: "var(--color-bg)",
-                  border: "1px solid var(--color-border)",
-                  borderRadius: "var(--radius-sm)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
                   fontFamily: "var(--font-display)",
-                  fontSize: "0.75rem",
-                  color: "var(--color-text)",
+                  fontSize: "0.85rem",
+                  color: "var(--color-accent)",
                   fontWeight: 500,
                 }}
               >
-                {tech}
-              </span>
+                <img
+                  src="/media/github-icon-1.svg"
+                  alt="GitHub"
+                  style={{ width: "18px", height: "18px", opacity: 0.6 }}
+                />
+                github.com/{handle}
+              </a>
             ))}
           </div>
+          <p
+            style={{
+              fontSize: "0.8rem",
+              color: "var(--color-text-muted)",
+              lineHeight: 1.6,
+              marginTop: "0.75rem",
+            }}
+          >
+            Lots of repos are private due to academic honesty policies. I&apos;m
+            reviewing and integrating each project into this main dev site repo
+            as I go.
+          </p>
         </div>
-        <div>
+        <div
+          style={{
+            border: "2px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "1.5rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <h2
             style={{
               fontFamily: "var(--font-display)",
@@ -170,27 +198,29 @@ export default function Home() {
               marginBottom: "1rem",
             }}
           >
-            Things I&apos;m learning
+            LinkedIn
           </h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-            {learningSkills.map((tech) => (
-              <span
-                key={tech}
-                style={{
-                  padding: "0.3rem 0.65rem",
-                  background: "var(--color-accent-light)",
-                  border: "1px solid var(--color-accent)",
-                  borderRadius: "var(--radius-sm)",
-                  fontFamily: "var(--font-display)",
-                  fontSize: "0.75rem",
-                  color: "var(--color-accent-dim)",
-                  fontWeight: 500,
-                }}
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
+          <a
+            href="https://linkedin.com/in/ryan-houlberg-272a0256"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontFamily: "var(--font-display)",
+              fontSize: "0.85rem",
+              color: "var(--color-accent)",
+              fontWeight: 500,
+            }}
+          >
+            <img
+              src="/media/linkedin-icon-2.svg"
+              alt="LinkedIn"
+              style={{ width: "18px", height: "18px", opacity: 0.6 }}
+            />
+            linkedin.com/in/ryan-houlberg
+          </a>
         </div>
       </section>
 
@@ -374,7 +404,7 @@ export default function Home() {
                   position: "relative",
                 }}
               >
-                {/* Left drop */}
+                {/* Drops — one per upstream container */}
                 <div
                   style={{
                     position: "absolute",
@@ -385,11 +415,10 @@ export default function Home() {
                     background: "var(--color-border)",
                   }}
                 />
-                {/* Center drop */}
                 <div
                   style={{
                     position: "absolute",
-                    left: "50%",
+                    left: "33.33%",
                     top: 0,
                     width: "2px",
                     height: "16px",
@@ -397,7 +426,17 @@ export default function Home() {
                     transform: "translateX(-50%)",
                   }}
                 />
-                {/* Right drop */}
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "66.66%",
+                    top: 0,
+                    width: "2px",
+                    height: "16px",
+                    background: "var(--color-border)",
+                    transform: "translateX(-50%)",
+                  }}
+                />
                 <div
                   style={{
                     position: "absolute",
@@ -415,7 +454,7 @@ export default function Home() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
+                gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
                 gap: "0.75rem",
                 marginTop: "0.5rem",
               }}
@@ -531,6 +570,43 @@ export default function Home() {
                   :8080
                 </div>
               </div>
+              <div
+                style={{
+                  padding: "0.75rem",
+                  border: "2px solid var(--color-border)",
+                  borderRadius: "var(--radius-md)",
+                  background: "var(--color-surface)",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    fontWeight: 700,
+                    color: "var(--color-text)",
+                    marginBottom: "0.15rem",
+                  }}
+                >
+                  Axum
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "var(--color-text-muted)",
+                  }}
+                >
+                  cookery
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.65rem",
+                    color: "var(--color-text-muted)",
+                    marginTop: "0.35rem",
+                    fontStyle: "italic",
+                  }}
+                >
+                  :8081
+                </div>
+              </div>
             </div>
 
             {/* Shared assets note */}
@@ -573,122 +649,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Links row — GitHub + LinkedIn side by side */}
       <section
         style={{
           marginBottom: "4rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "1.5rem",
+          background: "var(--color-surface)",
+          border: "2px solid var(--color-border)",
+          borderRadius: "var(--radius-lg)",
+          padding: "2rem",
         }}
       >
-        <div
+        <h2
           style={{
-            border: "2px solid var(--color-border)",
-            borderRadius: "var(--radius-lg)",
-            padding: "1.5rem",
+            fontFamily: "var(--font-display)",
+            fontSize: "0.8rem",
+            color: "var(--color-text-muted)",
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+            marginBottom: "1rem",
           }}
         >
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "0.8rem",
-              color: "var(--color-text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              marginBottom: "1rem",
-            }}
-          >
-            GitHub
-          </h2>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.5rem",
-            }}
-          >
-            {["rho2-pdx", "RyanHoulberg"].map((handle) => (
-              <a
-                key={handle}
-                href={`https://github.com/${handle}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  fontFamily: "var(--font-display)",
-                  fontSize: "0.85rem",
-                  color: "var(--color-accent)",
-                  fontWeight: 500,
-                }}
-              >
-                <img
-                  src="/media/github-icon-1.svg"
-                  alt="GitHub"
-                  style={{ width: "18px", height: "18px", opacity: 0.6 }}
-                />
-                github.com/{handle}
-              </a>
-            ))}
-          </div>
-          <p
-            style={{
-              fontSize: "0.8rem",
-              color: "var(--color-text-muted)",
-              lineHeight: 1.6,
-              marginTop: "0.75rem",
-            }}
-          >
-            Lots of repos are private due to academic honesty policies. I&apos;m
-            reviewing and integrating each project into this main dev site repo
-            as I go.
-          </p>
-        </div>
-        <div
-          style={{
-            border: "2px solid var(--color-border)",
-            borderRadius: "var(--radius-lg)",
-            padding: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "0.8rem",
-              color: "var(--color-text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              marginBottom: "1rem",
-            }}
-          >
-            LinkedIn
-          </h2>
-          <a
-            href="https://linkedin.com/in/ryan-houlberg-272a0256"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              fontFamily: "var(--font-display)",
-              fontSize: "0.85rem",
-              color: "var(--color-accent)",
-              fontWeight: 500,
-            }}
-          >
-            <img
-              src="/media/linkedin-icon-2.svg"
-              alt="LinkedIn"
-              style={{ width: "18px", height: "18px", opacity: 0.6 }}
-            />
-            linkedin.com/in/ryan-houlberg
-          </a>
+          Skills
+        </h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+          {skills.map((tech) => (
+            <span
+              key={tech}
+              style={{
+                padding: "0.3rem 0.65rem",
+                background: "var(--color-bg)",
+                border: "1px solid var(--color-border)",
+                borderRadius: "var(--radius-sm)",
+                fontFamily: "var(--font-display)",
+                fontSize: "0.75rem",
+                color: "var(--color-text)",
+                fontWeight: 500,
+              }}
+            >
+              {tech}
+            </span>
+          ))}
         </div>
       </section>
     </div>
