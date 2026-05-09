@@ -13,13 +13,6 @@ type PhotoMoment = {
 export default function About() {
   const photoMoments: PhotoMoment[] = [
     {
-      src: "/media/about-photo-1.jpg",
-      alt: "Cherry Blossoms downtown PDX",
-      caption: "Portlandia did not age well as a show",
-      width: 1024,
-      height: 768,
-    },
-    {
       src: "/media/about-photo-2.jpg",
       alt: "white collar child labor",
       caption:
@@ -34,6 +27,13 @@ export default function About() {
         "Fun Fact: Lebron James left the Heat because Pat Riley took away his cookies",
       width: 768,
       height: 1024,
+    },
+    {
+      src: "/media/about-photo-1.jpg",
+      alt: "Cherry Blossoms downtown PDX",
+      caption: "Portlandia did not age well as a show",
+      width: 1024,
+      height: 768,
     },
     {
       src: "/media/about-photo-4.jpg",

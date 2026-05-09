@@ -38,7 +38,7 @@ export default function Home() {
             marginBottom: "0.75rem",
           }}
         >
-          we should be able to use a <i>little</i> Claude at work
+          i can't bring myself to say i'm an AI native
         </p>
         <h1
           style={{
@@ -56,7 +56,7 @@ export default function Home() {
           style={{
             fontSize: "1.1rem",
             color: "var(--color-text-muted)",
-            maxWidth: "680px",
+            maxWidth: "740px",
             lineHeight: 1.75,
             marginBottom: "2.5rem",
           }}
