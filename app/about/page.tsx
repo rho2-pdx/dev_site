@@ -5,7 +5,6 @@ type PhotoMoment = {
   alt: string;
   caption: string;
   detail?: string;
-  /** Intrinsic pixel size of the file (for layout + `next/image`). */
   width: number;
   height: number;
 };
@@ -45,97 +44,47 @@ export default function About() {
   ];
 
   return (
-    <div style={{ paddingTop: "3rem" }}>
-      <h1
-        style={{
-          fontSize: "clamp(2rem, 4vw, 3rem)",
-          fontWeight: 700,
-          lineHeight: 1.1,
-          marginBottom: "2rem",
-          letterSpacing: "-0.03em",
-        }}
-      >
-        About
-      </h1>
+    <div className="pt-12">
+      <h1 className="page-title mb-8">About</h1>
 
-      {/* Profile Photo */}
-      <section style={{ marginBottom: "3rem" }}>
-        <div
-          style={{
-            maxWidth: "400px",
-            width: "100%",
-            borderRadius: "var(--radius-lg)",
-            overflow: "hidden",
-            border: "2px solid var(--color-border)",
-            marginBottom: "1.5rem",
-          }}
-        >
+      <section className="mb-12">
+        <div className="mb-6 w-full max-w-[400px] overflow-hidden rounded-[var(--radius-lg)] border-2 border-[var(--color-border)]">
           <Image
             src="/media/profile-photo.jpeg"
             alt="Profile photo"
-            /* Display cap ~400px; 800×420 keeps 1200:630 aspect ratio and covers 2× retina. */
             width={800}
             height={420}
             sizes="(max-width: 480px) min(100vw - 3rem, 400px), 400px"
             quality={70}
             priority
+            className="h-auto w-full"
           />
         </div>
       </section>
 
-      {/* Bio */}
-      <section style={{ marginBottom: "3rem", maxWidth: "680px" }}>
-        <p
-          style={{
-            fontSize: "1.05rem",
-            color: "var(--color-text-muted)",
-            lineHeight: 1.8,
-          }}
-        >
+      <section className="mb-12 max-w-[680px]">
+        <p className="text-[1.05rem] leading-[1.8] text-[var(--color-text-muted)]">
           I know that this is a bagel sandwich but I&apos;m truly a burger
           fanatic. Also love bikes, motorcycles, trains, music, and more.
         </p>
       </section>
 
-      {/* Photo Moments */}
       <section>
-        <h2
-          style={{
-            fontSize: "1.4rem",
-            marginBottom: "1.25rem",
-            letterSpacing: "-0.02em",
-          }}
-        >
+        <h2 className="mb-5 text-[1.4rem] font-bold tracking-[-0.02em]">
           Life Snapshots
         </h2>
 
-        <div style={{ display: "grid", gap: "1.25rem" }}>
+        <div className="grid gap-5">
           {photoMoments.map((photo, index) => {
             const imageFirst = index % 2 === 0;
 
             return (
               <article
                 key={photo.src}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                  alignItems: "stretch",
-                  gridAutoRows: "minmax(0, auto)",
-                  border: "1px solid var(--color-border)",
-                  borderRadius: "var(--radius-lg)",
-                  overflow: "hidden",
-                  background: "var(--color-surface)",
-                }}
+                className="grid auto-rows-min grid-cols-1 items-stretch overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] min-[480px]:grid-cols-2"
               >
                 {imageFirst && (
-                  <div
-                    style={{
-                      minWidth: 0,
-                      minHeight: 0,
-                      width: "100%",
-                      alignSelf: "start",
-                    }}
-                  >
+                  <div className="min-h-0 min-w-0 w-full self-start">
                     <Image
                       src={photo.src}
                       alt={photo.alt}
@@ -143,50 +92,22 @@ export default function About() {
                       height={photo.height}
                       sizes="(max-width: 768px) 100vw, 50vw"
                       quality={80}
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        display: "block",
-                      }}
+                      className="block h-auto w-full"
                     />
                   </div>
                 )}
 
-                <div
-                  style={{
-                    minWidth: 0,
-                    minHeight: 0,
-                    padding: "1.1rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <p style={{ marginBottom: "0.45rem", fontWeight: 600 }}>
-                    {photo.caption}
-                  </p>
+                <div className="flex min-h-0 min-w-0 flex-col justify-center p-4">
+                  <p className="mb-2 font-semibold">{photo.caption}</p>
                   {photo.detail && (
-                    <p
-                      style={{
-                        color: "var(--color-text-muted)",
-                        fontSize: "0.95rem",
-                        lineHeight: 1.6,
-                      }}
-                    >
+                    <p className="text-[0.95rem] leading-relaxed text-[var(--color-text-muted)]">
                       {photo.detail}
                     </p>
                   )}
                 </div>
 
                 {!imageFirst && (
-                  <div
-                    style={{
-                      minWidth: 0,
-                      minHeight: 0,
-                      width: "100%",
-                      alignSelf: "start",
-                    }}
-                  >
+                  <div className="min-h-0 min-w-0 w-full self-start">
                     <Image
                       src={photo.src}
                       alt={photo.alt}
@@ -194,11 +115,7 @@ export default function About() {
                       height={photo.height}
                       sizes="(max-width: 768px) 100vw, 50vw"
                       quality={80}
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        display: "block",
-                      }}
+                      className="block h-auto w-full"
                     />
                   </div>
                 )}

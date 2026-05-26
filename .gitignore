@@ -44,7 +44,7 @@ next-env.d.ts
 # python temp cache
 __pycache__
 
-# Maven (e.g. projects/airline-web)
+# Maven / Rust build output (e.g. projects/airline-web, projects/cookery)
 **/target/
 
 # claude memory stuff

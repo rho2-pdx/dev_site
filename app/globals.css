@@ -50,3 +50,235 @@ a:hover {
     background: var(--color-accent-light);
     color: var(--color-text);
 }
+
+@layer components {
+    .page-section {
+        @apply mb-16;
+    }
+
+    .page-title {
+        @apply text-[clamp(2rem,4vw,3rem)] font-bold leading-tight tracking-[-0.03em] text-[var(--color-text)];
+    }
+
+    .page-title-lg {
+        @apply text-[clamp(2.5rem,6vw,4rem)] font-bold leading-tight tracking-[-0.03em] text-[var(--color-text)];
+    }
+
+    .section-eyebrow {
+        @apply mb-2 font-[family-name:var(--font-display)] text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-[var(--color-text-muted)];
+    }
+
+    .section-eyebrow-accent {
+        @apply mb-3 font-[family-name:var(--font-display)] text-[0.85rem] font-semibold text-[var(--color-accent)];
+    }
+
+    .body-lead {
+        @apply max-w-[740px] text-[1.1rem] leading-[1.75] text-[var(--color-text-muted)];
+    }
+
+    .body-text {
+        @apply text-[0.95rem] leading-relaxed text-[var(--color-text-muted)];
+    }
+
+    .surface-card {
+        @apply rounded-[var(--radius-lg)] border-2 border-[var(--color-border)] bg-[var(--color-surface)] p-6;
+    }
+
+    .btn-primary {
+        @apply inline-block rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-5 py-2.5 font-[family-name:var(--font-display)] text-[0.85rem] font-semibold text-white transition-colors duration-150 hover:bg-[var(--color-accent-dim)];
+    }
+
+    .btn-secondary {
+        @apply inline-block rounded-[var(--radius-sm)] border-2 border-[var(--color-border)] px-5 py-2.5 font-[family-name:var(--font-display)] text-[0.85rem] font-medium text-[var(--color-text)] transition-colors duration-150 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)];
+    }
+
+    .external-link {
+        @apply flex items-center gap-2 font-[family-name:var(--font-display)] text-[0.85rem] font-medium text-[var(--color-accent)];
+    }
+
+    .skill-tag {
+        @apply rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg)] px-2.5 py-1 font-[family-name:var(--font-display)] text-[0.75rem] font-medium text-[var(--color-text)];
+    }
+
+    .diagram-panel {
+        @apply rounded-[var(--radius-lg)] border-2 border-[var(--color-border)] bg-[var(--color-surface)] p-8 font-[family-name:var(--font-display)] text-[0.8rem];
+    }
+
+    .diagram-node {
+        @apply rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-[var(--color-bg)] px-6 py-2.5 text-center;
+    }
+
+    .diagram-node-surface {
+        @apply rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2 text-center;
+    }
+
+    .diagram-vline {
+        @apply mx-auto mb-2 h-6 w-0.5 bg-[var(--color-border)];
+    }
+
+    .diagram-vline-sm {
+        @apply mx-auto mb-2 h-4 w-0.5 bg-[var(--color-border)];
+    }
+
+    .diagram-service {
+        @apply rounded-[var(--radius-md)] border-2 border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-center;
+    }
+
+    .project-card {
+        @apply block rounded-[var(--radius-lg)] border-2 border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-colors duration-150 hover:border-[var(--color-accent)];
+    }
+}
+
+@keyframes journal-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes journal-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.journal-entry-panel {
+    animation: journal-fade-in 0.2s ease-out;
+}
+
+.journal-entry-section {
+    animation: journal-slide-in 0.3s ease-out;
+}
+
+.journal-cal-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+.journal-cal-wrapper .rdp-root {
+    --rdp-accent-color: var(--color-accent);
+    --rdp-accent-background-color: var(--color-accent);
+    --rdp-day-height: 44px;
+    --rdp-day-width: 44px;
+    --rdp-selected-border: 0;
+    --rdp-outside-opacity: 0.2;
+    --rdp-today-color: var(--color-accent);
+
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.25rem;
+    color: var(--color-text);
+    width: 100%;
+}
+
+.journal-cal-wrapper .rdp-month_caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.journal-cal-wrapper .rdp-caption_label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    font-family: var(--font-display);
+}
+
+.journal-cal-wrapper .rdp-chevron {
+    fill: var(--color-text-muted);
+    width: 22px;
+    height: 22px;
+}
+
+.journal-cal-wrapper .rdp-nav {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.journal-cal-wrapper .rdp-button_previous,
+.journal-cal-wrapper .rdp-button_next {
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.15s ease;
+}
+
+.journal-cal-wrapper .rdp-button_previous:hover,
+.journal-cal-wrapper .rdp-button_next:hover {
+    background-color: var(--color-bg-secondary);
+}
+
+.journal-cal-wrapper .rdp-weekday {
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-bottom: 0.75rem;
+    font-family: var(--font-display);
+}
+
+.journal-cal-wrapper .rdp-month_grid {
+    border-collapse: separate;
+    border-spacing: 8px 8px;
+}
+
+.journal-cal-wrapper .rdp-day_button {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    opacity: 0.35;
+    cursor: default;
+    transition: all 0.15s ease;
+    border: 2px solid transparent;
+}
+
+.journal-cal-wrapper .rdp-today .rdp-day_button {
+    color: var(--color-accent);
+    opacity: 0.5;
+}
+
+.journal-cal-wrapper .rdp-has-entry .rdp-day_button {
+    color: var(--color-accent);
+    opacity: 1;
+    font-weight: 600;
+    background-color: var(--color-accent-light);
+    border-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.journal-cal-wrapper .rdp-has-entry .rdp-day_button:hover {
+    background-color: var(--color-accent);
+    color: #fff;
+    border-color: var(--color-accent);
+}
+
+.journal-cal-wrapper .rdp-selected .rdp-day_button {
+    color: #fff !important;
+    opacity: 1 !important;
+    font-weight: 700;
+    background-color: var(--color-accent) !important;
+    border-color: var(--color-accent-dim) !important;
+    cursor: pointer;
+}

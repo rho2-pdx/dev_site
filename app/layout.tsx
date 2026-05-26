@@ -28,25 +28,10 @@ export default function RootLayout({
       </head>
       <body>
         <Nav />
-        <main
-          style={{
-            maxWidth: "1100px",
-            margin: "0 auto",
-            padding: "3rem 1.5rem",
-          }}
-        >
+        <main className="mx-auto max-w-[1100px] px-4 py-12 sm:px-6">
           {children}
         </main>
-        <footer
-          style={{
-            borderTop: "2px solid var(--color-border)",
-            padding: "1.5rem",
-            textAlign: "center",
-            color: "var(--color-text-muted)",
-            fontFamily: "var(--font-display)",
-            fontSize: "0.75rem",
-          }}
-        >
+        <footer className="border-t-2 border-[var(--color-border)] px-4 py-6 text-center font-[family-name:var(--font-display)] text-[0.75rem] text-[var(--color-text-muted)]">
           &copy; 2026 Ryan Houlberg
         </footer>
       </body>
