@@ -85,7 +85,7 @@ a:hover {
     }
 
     .btn-primary {
-        @apply inline-block rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-5 py-2.5 font-[family-name:var(--font-display)] text-[0.85rem] font-semibold text-white transition-colors duration-150 hover:bg-[var(--color-accent-dim)];
+        @apply inline-block rounded-[var(--radius-sm)] bg-[var(--color-accent-dim)] px-5 py-2.5 font-[family-name:var(--font-display)] text-[0.85rem] font-semibold text-white shadow-sm transition-colors duration-150 hover:bg-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)];
     }
 
     .btn-secondary {
