@@ -47,7 +47,20 @@ services:
       - POSTGRES_DB=cookery
     volumes:
       - cookery-db-data:/var/lib/postgresql/data
-      - ./projects/cookery/CookeryData.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      # Postgres only runs these on first init of an empty volume.
+      # Deploy wipes cookery-db-data so CookeryData.sql stays the source of truth.
+      - ./projects/cookery/db-init/00-create-cook-role.sql:/docker-entrypoint-initdb.d/00-create-cook-role.sql:ro
+      - ./projects/cookery/CookeryData.sql:/docker-entrypoint-initdb.d/01-CookeryData.sql:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U cookery -d cookery && psql -U cookery -d cookery -c 'SELECT 1 FROM frecipe LIMIT 1'",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 36
+      start_period: 15s
     restart: unless-stopped
 
   cookery:
@@ -59,7 +72,8 @@ services:
       - COOKERY_RECIPE_TABLE=${COOKERY_RECIPE_TABLE:-recipes}
       - PORT=8081
     depends_on:
-      - cookery-db
+      cookery-db:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:

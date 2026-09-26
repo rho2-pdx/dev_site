@@ -19,4 +19,7 @@ cargo run
 - App only discovers and queries recipe-oriented columns (`id`, `title`, optional `summary`, `instructions`).
 - No login or password handling is implemented.
 - All recipe reads run inside explicit read-only database transactions.
+- `CookeryData.sql` is the recipe source of truth. Postgres only loads
+  `/docker-entrypoint-initdb.d` scripts when the `cookery-db-data` volume is
+  empty, so production deploy removes that volume and reseeds from the dump.
 

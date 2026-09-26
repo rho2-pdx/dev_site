@@ -19,5 +19,13 @@ jobs:
           script: |
             cd ~/dev_site
             git pull origin main
+            # Cookery recipes live in CookeryData.sql. Postgres init scripts only
+            # run on an empty data volume, so recreate that volume on each deploy.
+            docker compose stop cookery cookery-db || true
+            docker compose rm -fs cookery-db || true
+            db_volume="$(docker volume ls -q --filter name=cookery-db-data | head -n1)"
+            if [ -n "$db_volume" ]; then
+              docker volume rm "$db_volume"
+            fi
             docker compose up -d --build
             docker compose restart nginx
