@@ -16,9 +16,17 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          # Fail the job if any deploy command fails (git pull used to abort
+          # while docker still ran against a dirty checkout).
+          script_stop: true
           script: |
+            set -euo pipefail
             cd ~/dev_site
-            git pull origin main
+            # VPS checkout can have local edits (e.g. CookeryData.sql) that
+            # block `git pull`. Always sync exactly to origin/main.
+            git fetch origin main
+            git reset --hard origin/main
+            git clean -fd
             # Cookery recipes live in CookeryData.sql. Postgres init scripts only
             # run on an empty data volume, so recreate that volume on each deploy.
             docker compose stop cookery cookery-db || true
